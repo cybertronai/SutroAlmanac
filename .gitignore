@@ -1,5 +1,7 @@
 # build output
 dist/
+# private digests (telegram extracts; never published)
+digests/
 # generated types
 .astro/
 
