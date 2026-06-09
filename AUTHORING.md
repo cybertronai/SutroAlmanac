@@ -11,6 +11,41 @@ notes are their own strand. The timeline, insights, projects, and repos pages
 derive from all of these. Every claim traces back to a source: a Telegram
 message, a shared link, a changelog release, or a catch-up.
 
+## Sources
+
+Every claim traces back to a source, so the Almanac stays auditable. A recap says
+what happened and then points at the thing that backs it. The digest scripts only
+count and extract, never summarize, so nothing in a recap can be invented.
+
+End every monthly recap with a `## Sources` block. The existing months show the
+shape: the changelog releases it leans on, the catch-up it reuses, and the
+Telegram topics and dates it draws from, each with a link where one exists.
+
+The full set the Almanac draws from:
+
+| Source | What it provides | Accessed via |
+|---|---|---|
+| Telegram archive (`telegram.db`) | The private group chat: per-topic messages with sender and date. The raw material recaps are written from. | Read read-only by the digest scripts through `bun:sqlite`. Path defaults to `SUTROYARO/telegram.db`, override with `TELEGRAM_DB`. |
+| Generated digests (`digests/`) | Deterministic monthly and weekly extracts: topic volume, deduped links, signal lines, changelog releases, catch-up filenames. | Produced by the digest scripts. The working notes for each recap. |
+| SutroYaro changelog (`docs/changelog.md`) | The dated release log of the workspace. The dated spine of the timeline and each month. | Parsed by both digest scripts. |
+| SutroYaro catch-ups (`docs/catchups/`) | Dated status notes written before meetings. Reused as the notes a month is written from. | Filename is the date, bucketed by month. Also published in-site under `/catchups`. |
+| SutroYaro meeting and session notes | Long-form meeting writeups, transcripts, and exported Google Docs that give meeting context. | Linked from recap prose, published in-site under `/meetings`. |
+| Google Docs and Drive | Shared agendas, homework, braindumps, research drafts, and slide decks. | Workspace share links, access restricted to the group. |
+| Google Colab | Shared notebooks with runnable experiment code and demos. | Colab `/drive/{id}` share links. |
+| GitHub, cybertronai org | The core code: the group's own repos. The most-cited source. | Public GitHub, deep-linked to PRs, issues, commit SHAs, and blob line anchors. |
+| GitHub, external repos | Member forks and OSS baselines (karpathy, modded-nanogpt, openevolve, and others). | Public GitHub repo and blob links. |
+| GitHub Pages catalogs | The hinton-problems and schmidhuber-problems numpy-stub catalogs with training GIFs, plus findings sites. | Public Pages. The visual tour streams the GIFs from the live `cybertronai.github.io` sites. |
+| arXiv | Paper citations that ground the experiments (DMC, EGD, GrokFast, the forward-forward and energy work). | Public `/abs/` and `/pdf/` links. |
+| YouTube | Talks, lectures, and demo videos cited for context. | Public watch and `youtu.be` links. |
+| X / Twitter | Tweets cited as announcements from researchers in the orbit. | Public `x.com/{user}/status/{id}` links. |
+| NotebookLM | AI-assisted research and summary notebooks of the source material. | Public `notebooklm.google.com/notebook/` links. |
+| Notability | Shared handwritten meeting and whiteboard notes. | Public `notability.com/n/{id}` links. |
+| Modal and Cloud Run | Live hosted demos and infra docs: a Modal app, the sparse-parity solver on Cloud Run. | Public HTTPS endpoints (`*.modal.run`, `*.run.app`). |
+
+Two sources are private and never published raw: the Telegram archive and the
+generated `digests/` tree. Both are gitignored. Recaps cite topic and date and
+paraphrase rather than quote.
+
 ## Where content lives
 
 All content is markdown under `src/content/docs/`. The file id (minus `/index`)
@@ -26,10 +61,14 @@ is the route. The deployed site adds the `/SutroAlmanac` base on top.
 | Hub pages | `recaps/index.md`, `meetings/index.md`, `challenges/index.md` | `/recaps`, `/meetings`, `/challenges` |
 | Core pages | `intro.md`, `timeline.md`, `projects.md`, `insights.md`, `repos.md` | `/intro`, and so on |
 
+Routing is automatic from the file id. The header and footer nav is the `links`
+array in `src/layouts/Layout.astro`; add a top-level page there to surface it.
+
 ## Frontmatter
 
-Every page needs `title` and `description`. Quote any value that contains a
-colon, or the YAML parser fails the build.
+Every page needs `title` and `description`, validated by `src/content.config.ts`.
+Any other key is ignored. Quote any value that contains a colon, or the YAML
+parser fails the build.
 
 ```md
 ---
@@ -56,7 +95,8 @@ description: "Auto-research loops after the Modal hackathon, and the four challe
 2. Write the recap from the digest. Every claim should trace to a line in the
    digest. No prose from memory. Keep the source links.
 
-3. Link the new page from its hub (see the checklist at the end).
+3. End a monthly recap with a `## Sources` block (see [Sources](#sources)), then
+   link the new page from its hub (the checklist is at the end).
 
 ## Writing standards
 
@@ -65,7 +105,7 @@ The site carries no AI-slop. The hard rules:
 - No em-dashes or en-dashes. Use a comma, a period, or the word "to".
   Smartypants is off in the build, so a double hyphen stays a double hyphen.
 - No arrows of any kind, text or unicode.
-- No three-item rhetorical lists. Use two, or one, or write it as a sentence. A
+- No three-item rhetorical lists. Use two items, or write it as a sentence. A
   real table or a real list of people or metrics is fine.
 - Plain verbs: "used" not "leveraged", "showed" not "showcased". Use "is" and
   "has", not "serves as" or "represents".
@@ -84,6 +124,8 @@ The site is public. The digests are not.
 
 - Never publish verbatim private Telegram messages. Paraphrase into reported
   speech.
+- Catch-ups come from the SutroYaro status docs, not Telegram, so they keep their
+  wording, but still redact contact details and dollar figures before they go in.
 - Remove personal contact details: emails, phone numbers, street addresses.
 - Drop dollar figures and career or fundraising details tied to a named person.
 - Real names with public professional affiliations are kept where they already
