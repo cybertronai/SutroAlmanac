@@ -13,12 +13,12 @@
       "count": 54,
       "eras": [
         {
-          "name": "1980s — Connectionist foundations",
+          "name": "1980s, Connectionist foundations",
           "items": [
             {
               "slug": "encoder-4-2-4",
               "title": "encoder-4-2-4",
-              "paper": "Ackley, Hinton & Sejnowski (1985) — A learning algorithm for Boltzmann machines",
+              "paper": "Ackley, Hinton & Sejnowski (1985), A learning algorithm for Boltzmann machines",
               "star": true,
               "gif": "https://cybertronai.github.io/hinton-problems/encoder-4-2-4/encoder.gif",
               "caption": "Two groups of 4 visible binary units (V1, V2) connected through 2 hidden binary units. The bottleneck has exactly log2(4) bits of capacity, so the only correct solution puts the 4 training patterns on the 4 corners of {0, 1}^2."
@@ -26,7 +26,7 @@
             {
               "slug": "encoder-3-parity",
               "title": "encoder-3-parity",
-              "paper": "Ackley, Hinton & Sejnowski (1985) — A learning algorithm for Boltzmann machines",
+              "paper": "Ackley, Hinton & Sejnowski (1985), A learning algorithm for Boltzmann machines",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/encoder-3-parity/encoder_3_parity.gif",
               "caption": "3-bit even-parity. The point of this stub is the visible-only Boltzmann hits a hard floor of KL = log 2 ≈ 0.693 (it can only memorize even-cardinality marginals);"
@@ -34,15 +34,15 @@
             {
               "slug": "encoder-4-3-4",
               "title": "encoder-4-3-4",
-              "paper": "Ackley, Hinton & Sejnowski (1985) — A learning algorithm for Boltzmann machines",
+              "paper": "Ackley, Hinton & Sejnowski (1985), A learning algorithm for Boltzmann machines",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/encoder-4-3-4/encoder_4_3_4.gif",
-              "caption": "Over-complete encoder — 3 hidden bits to encode 4 patterns, leaving room for an error-correcting code to emerge. At the right seed the network finds the even-parity codeset (Hamming distance ≥ 2 between any two codes);"
+              "caption": "Over-complete encoder, 3 hidden bits to encode 4 patterns, leaving room for an error-correcting code to emerge. At the right seed the network finds the even-parity codeset (Hamming distance ≥ 2 between any two codes);"
             },
             {
               "slug": "encoder-8-3-8",
               "title": "encoder-8-3-8",
-              "paper": "Ackley, Hinton & Sejnowski (1985) — A learning algorithm for Boltzmann machines",
+              "paper": "Ackley, Hinton & Sejnowski (1985), A learning algorithm for Boltzmann machines",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/encoder-8-3-8/encoder_8_3_8.gif",
               "caption": "The information-theoretic minimum: 8 patterns through 3 hidden bits (log2(8) = 3). Hits the paper's reported 16/20 success rate exactly. GIF tracks the 8 hidden codes spreading to the 8 corners of {0, 1}^3."
@@ -50,15 +50,15 @@
             {
               "slug": "encoder-40-10-40",
               "title": "encoder-40-10-40",
-              "paper": "Ackley, Hinton & Sejnowski (1985) — A learning algorithm for Boltzmann machines",
+              "paper": "Ackley, Hinton & Sejnowski (1985), A learning algorithm for Boltzmann machines",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/encoder-40-10-40/encoder_40_10_40.gif",
-              "caption": "Scale stress-test of the same recipe. With 40 patterns through 10 hidden bits the local-minima problem softens (lots of valid codes) and CD-k recovers cleanly — modern sampling actually beats the 1985 simulated- annealing number."
+              "caption": "Scale stress-test of the same recipe. With 40 patterns through 10 hidden bits the local-minima problem softens (lots of valid codes) and CD-k recovers cleanly, modern sampling actually beats the 1985 simulated- annealing number."
             },
             {
               "slug": "xor",
               "title": "xor",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/xor/xor.gif",
               "caption": "The canonical 2-bit XOR. The decision-surface panel shows the network slicing the unit square along the anti-diagonal once the hidden layer has shaped two well-placed half-planes."
@@ -66,7 +66,7 @@
             {
               "slug": "n-bit-parity",
               "title": "n-bit-parity",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/n-bit-parity/n_bit_parity.gif",
               "caption": "Generalization of XOR to N bits. Thermometer-coded hidden units can be seen forming as N grows; the difficulty scales as advertised."
@@ -74,23 +74,23 @@
             {
               "slug": "encoder-backprop-8-3-8",
               "title": "encoder-backprop-8-3-8",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/encoder-backprop-8-3-8/encoder_backprop_8_3_8.gif",
-              "caption": "The backprop counterpart to the Boltzmann encoder above. Same problem, different gradient — and 70% of seeds reach exactly 8 distinct hidden codes. Useful side-by-side with encoder-8-3-8 to see what the sampling/temperature schedule buys you."
+              "caption": "The backprop counterpart to the Boltzmann encoder above. Same problem, different gradient, and 70% of seeds reach exactly 8 distinct hidden codes. Useful side-by-side with encoder-8-3-8 to see what the sampling/temperature schedule buys you."
             },
             {
               "slug": "distributed-to-local-bottleneck",
               "title": "distributed-to-local-bottleneck",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/distributed-to-local-bottleneck/distributed_to_local_bottleneck.gif",
-              "caption": "Smallest example of a graded single-unit code. One hidden unit must output 4 distinct real values to encode 4 patterns. The animation watches those values pull apart along the unit interval — paper reported (0, 0.2, 0.6, 1.0);"
+              "caption": "Smallest example of a graded single-unit code. One hidden unit must output 4 distinct real values to encode 4 patterns. The animation watches those values pull apart along the unit interval, paper reported (0, 0.2, 0.6, 1.0);"
             },
             {
               "slug": "symmetry",
               "title": "symmetry",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/symmetry/symmetry.gif",
               "caption": "6-bit palindrome detection from a single hidden unit. The famous 1 : 2 : 4 antisymmetric weight pattern falls out automatically; the weight Hinton diagram makes the geometric-progression pattern visible by eye at convergence."
@@ -98,31 +98,31 @@
             {
               "slug": "binary-addition",
               "title": "binary-addition",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/binary-addition/binary_addition.gif",
-              "caption": "Two 2-bit numbers in, 3-bit sum out. The interesting story is the local-minima study: a 4-3-3 network solves it;"
+              "caption": "Two 2-bit numbers in, 3-bit sum out. The interesting story is the local-minima study: a 4-3-3 network solves it; the bottlenecked 4-2-3 network cannot, the 2-hidden-unit version provably does not have enough capacity to disentangle carry from value."
             },
             {
               "slug": "negation",
               "title": "negation",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/negation/negation.gif",
-              "caption": "Flag-conditioned bit-flip — one input flag controls whether the other inputs are passed through or flipped."
+              "caption": "Flag-conditioned bit-flip, one input flag controls whether the other inputs are passed through or flipped."
             },
             {
               "slug": "t-c-discrimination",
               "title": "t-c-discrimination",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/t-c-discrimination/t_c_discrimination.gif",
-              "caption": "Shared-weight retina discriminating T from C across translations. With weight-tying across spatial positions (the 1986 ancestor of convolutions) the network grows three families of detectors — corner, edge, and T-junction — visible in the kernel…"
+              "caption": "Shared-weight retina discriminating T from C across translations. With weight-tying across spatial positions (the 1986 ancestor of convolutions) the network grows three families of detectors, corner, edge, and T-junction, visible in the kernel."
             },
             {
               "slug": "recurrent-shift-register",
               "title": "recurrent-shift-register",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/recurrent-shift-register/recurrent_shift_register.gif",
               "caption": "An RNN learning to be a pure shift register. Both N=3 and N=5 well under the paper's <200-sweep threshold. GIF shows the recurrent state walking through its cycle in lock-step with the input."
@@ -130,15 +130,15 @@
             {
               "slug": "sequence-lookup-25",
               "title": "sequence-lookup-25",
-              "paper": "Rumelhart, Hinton & Williams (1986) — Learning internal representations by error propagation",
+              "paper": "Rumelhart, Hinton & Williams (1986), Learning internal representations by error propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/sequence-lookup-25/sequence_lookup_25.gif",
-              "caption": "A small RNN learning to retrieve which of 25 stored sequences matches a prefix. The viz folder is the largest in the repo (12 PNGs) — per-task attention traces and per-position retrieval curves are worth a look."
+              "caption": "A small RNN learning to retrieve which of 25 stored sequences matches a prefix. The viz folder is the largest in the repo (12 PNGs), per-task attention traces and per-position retrieval curves are worth a look."
             },
             {
               "slug": "family-trees",
               "title": "family-trees",
-              "paper": "Hinton (1986) — Learning distributed representations of concepts",
+              "paper": "Hinton (1986), Learning distributed representations of concepts",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/family-trees/family_trees.gif",
               "caption": "The original distributed-representations result: an MLP learning two isomorphic kinship trees (English and Italian families) discovers a 6-dimensional code that disentangles generation, branch, and nationality."
@@ -146,7 +146,7 @@
             {
               "slug": "shifter",
               "title": "shifter",
-              "paper": "Hinton & Sejnowski (1986) — Learning and relearning in Boltzmann machines",
+              "paper": "Hinton & Sejnowski (1986), Learning and relearning in Boltzmann machines",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/shifter/shifter.gif",
               "caption": "The canonical higher-order-feature toy: a Boltzmann machine learning to decide whether two binary input strips are shifted left, right, or not at all."
@@ -154,60 +154,60 @@
             {
               "slug": "grapheme-sememe",
               "title": "grapheme-sememe",
-              "paper": "Hinton & Sejnowski (1986) — Learning and relearning in Boltzmann machines",
+              "paper": "Hinton & Sejnowski (1986), Learning and relearning in Boltzmann machines",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/grapheme-sememe/grapheme_sememe.gif",
-              "caption": "A 4-stage protocol — train, lesion, partial relearning, test — measuring spontaneous recovery: the network re-acquires lesioned associations faster than fresh ones, even without explicit retraining on them."
+              "caption": "A 4-stage protocol, train, lesion, partial relearning, test, measuring spontaneous recovery: the network re-acquires lesioned associations faster than fresh ones, even without explicit retraining on them."
             },
             {
               "slug": "riser-spectrogram",
               "title": "riser-spectrogram",
-              "paper": "Plaut & Hinton (1987) — Learning sets of filters using back-propagation",
+              "paper": "Plaut & Hinton (1987), Learning sets of filters using back-propagation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/riser-spectrogram/riser_spectrogram.gif",
-              "caption": "Synthetic riser/non-riser spectrogram discrimination. The interesting number is the gap to the analytically-known Bayes optimum: paper reports +1.0pp, we get +0.83pp — a small, real gap that goes away with longer training."
+              "caption": "Synthetic riser/non-riser spectrogram discrimination. The interesting number is the gap to the analytically-known Bayes optimum: paper reports +1.0pp, we get +0.83pp, a small, real gap that goes away with longer training."
             },
             {
               "slug": "fast-weights-rehearsal",
               "title": "fast-weights-rehearsal",
-              "paper": "Hinton & Plaut (1987) — Using fast weights to deblur old memories",
+              "paper": "Hinton & Plaut (1987), Using fast weights to deblur old memories",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/fast-weights-rehearsal/fast_weights_rehearsal.gif",
-              "caption": "Two-time-scale weights — slow weights store the long-term memory; fast weights pull old memories back into focus when rehearsal stimuli appear. The GIF runs the 4-phase protocol;"
+              "caption": "Two-time-scale weights, slow weights store the long-term memory; fast weights pull old memories back into focus when rehearsal stimuli appear. The GIF runs the 4-phase protocol;"
             }
           ]
         },
         {
-          "name": "1990s — Unsupervised learning, mixtures, the Helmholtz machine",
+          "name": "1990s, Unsupervised learning, mixtures, the Helmholtz machine",
           "items": [
             {
               "slug": "vowel-mixture-experts",
               "title": "vowel-mixture-experts",
-              "paper": "Jacobs, Jordan, Nowlan & Hinton (1991) — Adaptive mixtures of local experts",
+              "paper": "Jacobs, Jordan, Nowlan & Hinton (1991), Adaptive mixtures of local experts",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/vowel-mixture-experts/vowel_mixture_experts.gif",
-              "caption": "Peterson-Barney 4-class vowels in F1/F2 space. The gate's softmax over experts ends up cleanly partitioning the vowel space along phonetic boundaries — exactly the \"competing experts\" picture the paper sells. 2.7pp gain over a parameter-matched MLP."
+              "caption": "Peterson-Barney 4-class vowels in F1/F2 space. The gate's softmax over experts ends up cleanly partitioning the vowel space along phonetic boundaries, exactly the \"competing experts\" picture the paper sells. 2.7pp gain over a parameter-matched MLP."
             },
             {
               "slug": "random-dot-stereograms",
               "title": "random-dot-stereograms",
-              "paper": "Becker & Hinton (1992) — A self-organizing neural network that discovers surfaces in random-dot stereograms",
+              "paper": "Becker & Hinton (1992), A self-organizing neural network that discovers surfaces in random-dot stereograms",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/random-dot-stereograms/random_dot_stereograms.gif",
-              "caption": "Imax / spatial-coherence objective on synthetic random-dot stereograms. The model discovers depth (disparity) without any depth supervision — pure mutual-information between adjacent receptive fields. Disparity readout R² = 0.74 with no labels."
+              "caption": "Imax / spatial-coherence objective on synthetic random-dot stereograms. The model discovers depth (disparity) without any depth supervision, pure mutual-information between adjacent receptive fields. Disparity readout R² = 0.74 with no labels."
             },
             {
               "slug": "sunspots",
               "title": "sunspots",
-              "paper": "Nowlan & Hinton (1992) — Simplifying neural networks by soft weight-sharing",
+              "paper": "Nowlan & Hinton (1992), Simplifying neural networks by soft weight-sharing",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/sunspots/sunspots.gif",
-              "caption": "Soft weight-sharing on Wolfer sunspot-count regression. The post-training weight histogram develops two clean Gaussian peaks (one at 0 — pruned weights — and one at 0.27 — shared non-zero value), exactly as the paper predicts."
+              "caption": "Soft weight-sharing on Wolfer sunspot-count regression. The post-training weight histogram develops two clean Gaussian peaks (one at 0, pruned weights, and one at 0.27, shared non-zero value), exactly as the paper predicts."
             },
             {
               "slug": "spline-images-factorial-vq",
               "title": "spline-images-factorial-vq",
-              "paper": "Hinton & Zemel (1994) — Autoencoders, MDL and Helmholtz free energy",
+              "paper": "Hinton & Zemel (1994), Autoencoders, MDL and Helmholtz free energy",
               "star": true,
               "gif": "https://cybertronai.github.io/hinton-problems/spline-images-factorial-vq/spline_images_factorial_vq.gif",
               "caption": "Synthetic 5-parameter spline curves rendered to 2D images. The MDL factorial VQ assigns one VQ per latent dimension and beats a single 24-codebook standard-VQ baseline 3×."
@@ -215,15 +215,15 @@
             {
               "slug": "dipole-position",
               "title": "dipole-position",
-              "paper": "Zemel & Hinton (1995) — Learning population codes by minimizing description length",
+              "paper": "Zemel & Hinton (1995), Learning population codes by minimizing description length",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/dipole-position/dipole_position.gif",
-              "caption": "8×8 dipole at random (x, y). Population code emerges as a 2D arrangement of receptive fields tiling the input plane. Needs a brief supervised warm-up to break the symmetry — once broken, R² = 0.81."
+              "caption": "8×8 dipole at random (x, y). Population code emerges as a 2D arrangement of receptive fields tiling the input plane. Needs a brief supervised warm-up to break the symmetry, once broken, R² = 0.81."
             },
             {
               "slug": "dipole-3d-constraint",
               "title": "dipole-3d-constraint",
-              "paper": "Zemel & Hinton (1995) — Learning population codes by minimizing description length",
+              "paper": "Zemel & Hinton (1995), Learning population codes by minimizing description length",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/dipole-3d-constraint/dipole_3d_constraint.gif",
               "caption": "The 2D positions are constrained to lie on a 3D constraint surface; the network discovers all three dimensions of the manifold."
@@ -231,36 +231,36 @@
             {
               "slug": "dipole-what-where",
               "title": "dipole-what-where",
-              "paper": "Zemel & Hinton (1995) — Learning population codes by minimizing description length",
+              "paper": "Zemel & Hinton (1995), Learning population codes by minimizing description length",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/dipole-what-where/dipole_what_where.gif",
-              "caption": "Discontinuous what/where bars — the latent space splits into two perpendicular manifolds (identity vs location). Linear separability 0.58 shows the split, not perfectly clean."
+              "caption": "Discontinuous what/where bars, the latent space splits into two perpendicular manifolds (identity vs location). Linear separability 0.58 shows the split, not perfectly clean."
             },
             {
               "slug": "helmholtz-shifter",
               "title": "helmholtz-shifter",
-              "paper": "Dayan, Hinton, Neal & Zemel (1995) — The Helmholtz machine",
+              "paper": "Dayan, Hinton, Neal & Zemel (1995), The Helmholtz machine",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/helmholtz-shifter/helmholtz_shifter.gif",
-              "caption": "Two-stage generative shifter — recognition net + generative net trained by wake-sleep. 3 of 4 top-layer units become shift-selective; the generative model produces visually plausible shifted samples in the sleep phase shown in the GIF."
+              "caption": "Two-stage generative shifter, recognition net + generative net trained by wake-sleep. 3 of 4 top-layer units become shift-selective; the generative model produces visually plausible shifted samples in the sleep phase shown in the GIF."
             },
             {
               "slug": "bars",
               "title": "bars",
-              "paper": "Hinton, Dayan, Frey & Neal (1995) — The wake-sleep algorithm",
+              "paper": "Hinton, Dayan, Frey & Neal (1995), The wake-sleep algorithm",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/bars/bars.gif",
-              "caption": "The 4×4 horizontal/vertical bars problem — one of the most-cited toy generative-modelling benchmarks. 16-8-1 sigmoid belief net trained by wake-sleep. The KL gap to the paper number (0.451 vs 0.10) is documented as a partial reproduction;"
+              "caption": "The 4×4 horizontal/vertical bars problem, one of the most-cited toy generative-modelling benchmarks. 16-8-1 sigmoid belief net trained by wake-sleep. The KL gap to the paper number (0.451 vs 0.10) is documented as a partial reproduction;"
             }
           ]
         },
         {
-          "name": "2000s — Products of experts and temporal RBMs",
+          "name": "2000s, Products of experts and temporal RBMs",
           "items": [
             {
               "slug": "bars-rbm",
               "title": "bars-rbm",
-              "paper": "Hinton (2000) — Training products of experts by minimizing contrastive divergence",
+              "paper": "Hinton (2000), Training products of experts by minimizing contrastive divergence",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/bars-rbm/bars_rbm.gif",
               "caption": "The same bars problem trained as a CD-k RBM rather than wake-sleep. With 8 hidden units 7 of 8 bars are recovered cleanly; bumping to 16 hidden units recovers all 8. Direct demonstration of why CD made unsupervised learning at scale tractable."
@@ -268,36 +268,36 @@
             {
               "slug": "transforming-pairs",
               "title": "transforming-pairs",
-              "paper": "Memisevic & Hinton (2007) — Unsupervised learning of image transformations",
+              "paper": "Memisevic & Hinton (2007), Unsupervised learning of image transformations",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/transforming-pairs/transforming_pairs.gif",
-              "caption": "Gated 3-way RBM — the gates encode the transformation between two images, not either image alone."
+              "caption": "Gated 3-way RBM, the gates encode the transformation between two images, not either image alone."
             },
             {
               "slug": "bouncing-balls-2",
               "title": "bouncing-balls-2",
-              "paper": "Sutskever & Hinton (2007) — Multilevel distributed representations for high-dimensional sequences",
+              "paper": "Sutskever & Hinton (2007), Multilevel distributed representations for high-dimensional sequences",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/bouncing-balls-2/bouncing_balls_2.gif",
-              "caption": "TRBM video of bouncing balls. Rollout MSE sits between the trivial \"copy last frame\" and the oracle baselines — model has clearly learned some dynamics but not perfect physics."
+              "caption": "TRBM video of bouncing balls. Rollout MSE sits between the trivial \"copy last frame\" and the oracle baselines, model has clearly learned some dynamics but not perfect physics."
             },
             {
               "slug": "bouncing-balls-3",
               "title": "bouncing-balls-3",
-              "paper": "Sutskever, Hinton & Taylor (2008) — The recurrent temporal RBM",
+              "paper": "Sutskever, Hinton & Taylor (2008), The recurrent temporal RBM",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/bouncing-balls-3/bouncing_balls_3.gif",
-              "caption": "Same domain at higher resolution (30×30) and the recurrent variant. Reconstruction is tight (0.005 MSE on next-frame given history); free rollout drifts to 0.13 — the classic accumulating-error story."
+              "caption": "Same domain at higher resolution (30×30) and the recurrent variant. Reconstruction is tight (0.005 MSE on next-frame given history); free rollout drifts to 0.13, the classic accumulating-error story."
             }
           ]
         },
         {
-          "name": "2010s — Capsules, distillation, attention",
+          "name": "2010s, Capsules, distillation, attention",
           "items": [
             {
               "slug": "transforming-autoencoders",
               "title": "transforming-autoencoders",
-              "paper": "Hinton, Krizhevsky & Wang (2011) — Transforming auto-encoders",
+              "paper": "Hinton, Krizhevsky & Wang (2011), Transforming auto-encoders",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/transforming-autoencoders/transforming_autoencoders.gif",
               "caption": "The seed of the capsules program. Each capsule outputs a small pose vector (dx, dy) per part; reconstruction is gated through that pose."
@@ -305,15 +305,15 @@
             {
               "slug": "deep-lambertian-spheres",
               "title": "deep-lambertian-spheres",
-              "paper": "Tang, Salakhutdinov & Hinton (2012) — Deep Lambertian Networks",
+              "paper": "Tang, Salakhutdinov & Hinton (2012), Deep Lambertian Networks",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/deep-lambertian-spheres/deep_lambertian_spheres.gif",
-              "caption": "Synthetic spheres rendered under multiple lighting directions. The model recovers surface normals (27° angular error) and albedo (7× better than naive baseline) by separating shading from reflectance — the intrinsic-images problem cast as inverse…"
+              "caption": "Synthetic spheres rendered under multiple lighting directions. The model recovers surface normals (27° angular error) and albedo (7× better than naive baseline) by separating shading from reflectance, the intrinsic-images problem cast as inverse."
             },
             {
               "slug": "rnn-pathological",
               "title": "rnn-pathological",
-              "paper": "Sutskever, Martens, Dahl & Hinton (2013) — On the importance of initialization and momentum",
+              "paper": "Sutskever, Martens, Dahl & Hinton (2013), On the importance of initialization and momentum",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/rnn-pathological/rnn_pathological.gif",
               "caption": "The Hochreiter-Schmidhuber long-term-dependency battery. 3 of 4 tasks solved; orthogonal initialization beats random Gaussian init by a clear margin in the wallclock-to-converge curve."
@@ -321,7 +321,7 @@
             {
               "slug": "distillation-mnist-omitted-3",
               "title": "distillation-mnist-omitted-3",
-              "paper": "Hinton, Vinyals & Dean (2015) — Distilling the knowledge in a neural network",
+              "paper": "Hinton, Vinyals & Dean (2015), Distilling the knowledge in a neural network",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/distillation-mnist-omitted-3/distillation_mnist_omitted_3.gif",
               "caption": "The classic \"student never sees a 3\" demonstration. Soft-target distillation transfers enough information about digit 3 from the teacher's logits that, after a per-class bias correction, the student classifies 3s at 97.82%."
@@ -329,15 +329,15 @@
             {
               "slug": "air-multimnist",
               "title": "air-multimnist",
-              "paper": "Eslami et al. (2016) — Attend, Infer, Repeat",
+              "paper": "Eslami et al. (2016), Attend, Infer, Repeat",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/air-multimnist/air_multimnist.gif",
-              "caption": "Variable-count MNIST scenes — the model decides how many objects are in the image, then attends to and reconstructs each. Object-count accuracy 79.7%; reconstructions blurry. The GIF visualizes the per-step attention windows opening one at a time."
+              "caption": "Variable-count MNIST scenes, the model decides how many objects are in the image, then attends to and reconstructs each. Object-count accuracy 79.7%; reconstructions blurry. The GIF visualizes the per-step attention windows opening one at a time."
             },
             {
               "slug": "air-3d-primitives",
               "title": "air-3d-primitives",
-              "paper": "Eslami et al. (2016) — Attend, Infer, Repeat",
+              "paper": "Eslami et al. (2016), Attend, Infer, Repeat",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/air-3d-primitives/air_3d_primitives.gif",
               "caption": "Same AIR machinery, but the renderer is a small 3D primitive engine and the inference network must invert it. Cleanly recovers 1-primitive scenes; 3-primitive count accuracy 81%."
@@ -345,7 +345,7 @@
             {
               "slug": "fast-weights-associative-retrieval",
               "title": "fast-weights-associative-retrieval",
-              "paper": "Ba, Hinton, Mnih, Leibo & Ionescu (2016) — Using fast weights to attend to the recent past",
+              "paper": "Ba, Hinton, Mnih, Leibo & Ionescu (2016), Using fast weights to attend to the recent past",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/fast-weights-associative-retrieval/fast_weights_associative_retrieval.gif",
               "caption": "faithful; retrieval rate 38% short of paper. The fast-weight matrix (visualized as a heatmap that grows then decays) is the visualization star here."
@@ -353,15 +353,15 @@
             {
               "slug": "multi-level-glimpse-mnist",
               "title": "multi-level-glimpse-mnist",
-              "paper": "Ba, Hinton, Mnih, Leibo & Ionescu (2016) — Using fast weights to attend to the recent past",
+              "paper": "Ba, Hinton, Mnih, Leibo & Ionescu (2016), Using fast weights to attend to the recent past",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/multi-level-glimpse-mnist/multi_level_glimpse_mnist.gif",
-              "caption": "24 hierarchical glimpses on MNIST. The GIF traces the glimpse trajectory across the digit — a clean visualization of attention-as-control even at the modest 82% accuracy."
+              "caption": "24 hierarchical glimpses on MNIST. The GIF traces the glimpse trajectory across the digit, a clean visualization of attention-as-control even at the modest 82% accuracy."
             },
             {
               "slug": "catch-game",
               "title": "catch-game",
-              "paper": "Ba, Hinton, Mnih, Leibo & Ionescu (2016) — Using fast weights to attend to the recent past",
+              "paper": "Ba, Hinton, Mnih, Leibo & Ionescu (2016), Using fast weights to attend to the recent past",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/catch-game/catch_game.gif",
               "caption": "A partial-observability paddle/ball game where the network must integrate information across time to catch the ball. Fast-weights variant beats the vanilla RNN 33.9% to 11.4% at size=20 (paper-scale); reaches 91% at the easier size=10 setting."
@@ -369,15 +369,15 @@
             {
               "slug": "multimnist-capsnet",
               "title": "multimnist-capsnet",
-              "paper": "Sabour, Frosst & Hinton (2017) — Dynamic routing between capsules",
+              "paper": "Sabour, Frosst & Hinton (2017), Dynamic routing between capsules",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/multimnist-capsnet/multimnist_capsnet.gif",
-              "caption": "Overlapping digit pairs. The network must decompose a single image into two simultaneous classifications — exactly the case capsules were designed for. 22× above chance at 48.6% on this hard split, but well short of paper."
+              "caption": "Overlapping digit pairs. The network must decompose a single image into two simultaneous classifications, exactly the case capsules were designed for. 22× above chance at 48.6% on this hard split, but well short of paper."
             },
             {
               "slug": "affnist",
               "title": "affnist",
-              "paper": "Sabour, Frosst & Hinton (2017) — Dynamic routing between capsules",
+              "paper": "Sabour, Frosst & Hinton (2017), Dynamic routing between capsules",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/affnist/affnist.gif",
               "caption": "Train on translated MNIST, test on affNIST (additional rotations and shears). The paper claimed CapsNet generalizes to novel viewpoints better than a parameter-matched CNN by +13%; we get the opposite sign."
@@ -385,28 +385,28 @@
             {
               "slug": "smallnorb-novel-viewpoint",
               "title": "smallnorb-novel-viewpoint",
-              "paper": "Hinton, Sabour & Frosst (2018) — Matrix capsules with EM routing",
+              "paper": "Hinton, Sabour & Frosst (2018), Matrix capsules with EM routing",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/smallnorb-novel-viewpoint/smallnorb_novel_viewpoint.gif",
-              "caption": "Synthesized NORB-style objects, held-out azimuth/elevation at test time. Matrix capsules edge out a parameter-matched CNN on the held-out viewpoint split — the qualitative claim of the paper holds, with smaller absolute numbers."
+              "caption": "Synthesized NORB-style objects, held-out azimuth/elevation at test time. Matrix capsules edge out a parameter-matched CNN on the held-out viewpoint split, the qualitative claim of the paper holds, with smaller absolute numbers."
             },
             {
               "slug": "constellations",
               "title": "constellations",
-              "paper": "Kosiorek, Sabour, Teh & Hinton (2019) — Stacked capsule autoencoders",
+              "paper": "Kosiorek, Sabour, Teh & Hinton (2019), Stacked capsule autoencoders",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/constellations/constellations.gif",
-              "caption": "2D point-cloud part-whole grouping. The model groups individual points into the constellations they came from with no supervision — 86.9% per- point recovery at the best seed."
+              "caption": "2D point-cloud part-whole grouping. The model groups individual points into the constellations they came from with no supervision, 86.9% per- point recovery at the best seed."
             }
           ]
         },
         {
-          "name": "2020s — Subclass distillation, GLOM, Forward-Forward",
+          "name": "2020s, Subclass distillation, GLOM, Forward-Forward",
           "items": [
             {
               "slug": "mnist-2x5-subclass",
               "title": "mnist-2x5-subclass",
-              "paper": "Müller, Kornblith & Hinton (2020) — Subclass distillation",
+              "paper": "Müller, Kornblith & Hinton (2020), Subclass distillation",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/mnist-2x5-subclass/mnist_2x5_subclass.gif",
               "caption": "A super-class teacher trained on {0..4} vs {5..9} two-class labels; the student receives the teacher's logits, which carry hidden subclass information."
@@ -414,15 +414,15 @@
             {
               "slug": "geo-flow-capsules",
               "title": "geo-flow-capsules",
-              "paper": "Sabour, Tagliasacchi, Yazdani, Hinton & Fleet (2021) — Unsupervised part representation by flow capsules",
+              "paper": "Sabour, Tagliasacchi, Yazdani, Hinton & Fleet (2021), Unsupervised part representation by flow capsules",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/geo-flow-capsules/geo_flow_capsules.gif",
-              "caption": "Geo / Geo+ moving 2D shapes — the model decomposes each frame into parts using only motion (optical-flow consistency) as supervision. Mean IoU 0.764 against ground-truth part masks vs chance 0.20."
+              "caption": "Geo / Geo+ moving 2D shapes, the model decomposes each frame into parts using only motion (optical-flow consistency) as supervision. Mean IoU 0.764 against ground-truth part masks vs chance 0.20."
             },
             {
               "slug": "ellipse-world",
               "title": "ellipse-world",
-              "paper": "Culp, Sabour & Hinton (2022) — Testing GLOM's ability to infer wholes from ambiguous parts",
+              "paper": "Culp, Sabour & Hinton (2022), Testing GLOM's ability to infer wholes from ambiguous parts",
               "star": true,
               "gif": "https://cybertronai.github.io/hinton-problems/ellipse-world/ellipse_world.gif",
               "caption": "eGLOM-lite for the ambiguous-part-to-whole test. Each frame of the GIF is one iteration of the GLOM column dynamics; you can watch islands of agreement form across iterations as ambiguous local parts commit to a consistent global whole."
@@ -430,15 +430,15 @@
             {
               "slug": "ff-hybrid-mnist",
               "title": "ff-hybrid-mnist",
-              "paper": "Hinton (2022) — The forward-forward algorithm",
+              "paper": "Hinton (2022), The forward-forward algorithm",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/ff-hybrid-mnist/ff_hybrid_mnist.gif",
-              "caption": "FF unsupervised MLP with hand-crafted hybrid-image negatives. The GIF shows the negative-sample construction (images literally averaged in pixel space). Test error 5.21% — works, but does not match paper's 1.37%."
+              "caption": "FF unsupervised MLP with hand-crafted hybrid-image negatives. The GIF shows the negative-sample construction (images literally averaged in pixel space). Test error 5.21%, works, but does not match paper's 1.37%."
             },
             {
               "slug": "ff-label-in-input",
               "title": "ff-label-in-input",
-              "paper": "Hinton (2022) — The forward-forward algorithm",
+              "paper": "Hinton (2022), The forward-forward algorithm",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/ff-label-in-input/ff_label_in_input.gif",
               "caption": "The label one-hot is concatenated to the first 10 pixels of the image, then FF is run with the correct label as positive and a wrong label as negative. Closer to paper than the hybrid variant (3.60% vs 1.36%)."
@@ -446,26 +446,26 @@
             {
               "slug": "ff-recurrent-mnist",
               "title": "ff-recurrent-mnist",
-              "paper": "Hinton (2022) — The forward-forward algorithm",
+              "paper": "Hinton (2022), The forward-forward algorithm",
               "star": true,
               "gif": "https://cybertronai.github.io/hinton-problems/ff-recurrent-mnist/ff_recurrent_mnist.gif",
-              "caption": "The \"video\" variant — the same MNIST frame repeated for several timesteps with top-down recurrent connections so each layer can use the next layer's previous-step activity as context."
+              "caption": "The \"video\" variant, the same MNIST frame repeated for several timesteps with top-down recurrent connections so each layer can use the next layer's previous-step activity as context."
             },
             {
               "slug": "ff-cifar-locally-connected",
               "title": "ff-cifar-locally-connected",
-              "paper": "Hinton (2022) — The forward-forward algorithm",
+              "paper": "Hinton (2022), The forward-forward algorithm",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/ff-cifar-locally-connected/ff_cifar_locally_connected.gif",
-              "caption": "CIFAR-10 with a locally-connected (not weight-tied) FF network. FF beats a parameter-matched BP baseline on this architecture (22.78% vs 38.31% test err) — one of the few places in the suite where FF wins outright."
+              "caption": "CIFAR-10 with a locally-connected (not weight-tied) FF network. FF beats a parameter-matched BP baseline on this architecture (22.78% vs 38.31% test err), one of the few places in the suite where FF wins outright."
             },
             {
               "slug": "ff-aesop-sequences",
               "title": "ff-aesop-sequences",
-              "paper": "Hinton (2022) — The forward-forward algorithm",
+              "paper": "Hinton (2022), The forward-forward algorithm",
               "star": false,
               "gif": "https://cybertronai.github.io/hinton-problems/ff-aesop-sequences/ff_aesop_sequences.gif",
-              "caption": "Next-character prediction on Aesop's Fables with self-generated negatives — the negatives come from the model's own previous-step predictions. Teacher-forced 53%, self-generated 34%, well above any of the non-FF baselines (3–20%)."
+              "caption": "Next-character prediction on Aesop's Fables with self-generated negatives, the negatives come from the model's own previous-step predictions. Teacher-forced 53%, self-generated 34%, well above any of the non-FF baselines (3-20%)."
             }
           ]
         }
@@ -480,33 +480,33 @@
       "count": 57,
       "eras": [
         {
-          "name": "1980s — Local rules and the Neural Bucket Brigade",
+          "name": "1980s, Local rules and the Neural Bucket Brigade",
           "items": [
             {
               "slug": "nbb-xor",
               "title": "nbb-xor",
-              "paper": "Schmidhuber (1989) — A local learning algorithm for dynamic feedforward and recurrent networks",
+              "paper": "Schmidhuber (1989), A local learning algorithm for dynamic feedforward and recurrent networks",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/nbb-xor/nbb_xor.gif",
-              "caption": "XOR via the Neural Bucket Brigade — a strictly local-in-space-and-time, winner-take-all, dissipative learning rule. There is no backprop, no RTRL, no gradient."
+              "caption": "XOR via the Neural Bucket Brigade, a strictly local-in-space-and-time, winner-take-all, dissipative learning rule. There is no backprop, no RTRL, no gradient."
             },
             {
               "slug": "nbb-moving-light",
               "title": "nbb-moving-light",
-              "paper": "Schmidhuber (1989) — A local learning algorithm for dynamic feedforward and recurrent networks",
+              "paper": "Schmidhuber (1989), A local learning algorithm for dynamic feedforward and recurrent networks",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/nbb-moving-light/nbb_moving_light.gif",
-              "caption": "1-D moving-light direction discrimination via the same NBB rule extended to a small fully-recurrent net (5 retina cells + bias → 2 output units forming a WTA subset)."
+              "caption": "1-D moving-light direction discrimination via the same NBB rule extended to a small fully-recurrent net (5 retina cells + bias to 2 output units forming a WTA subset)."
             }
           ]
         },
         {
-          "name": "1990 — Controller + world-model + flip-flop",
+          "name": "1990, Controller + world-model + flip-flop",
           "items": [
             {
               "slug": "flip-flop",
               "title": "flip-flop",
-              "paper": "Schmidhuber (1990) — Making the world differentiable",
+              "paper": "Schmidhuber (1990), Making the world differentiable",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/flip-flop/flip_flop.gif",
               "caption": "The 1990 paper sets up a tiny non-stationary control task that has all the ingredients of the long-time-lag problem Hochreiter would later formalise as the vanishing-gradient barrier."
@@ -514,7 +514,7 @@
             {
               "slug": "pole-balance-non-markov",
               "title": "pole-balance-non-markov",
-              "paper": "Schmidhuber (1990) — Making the world differentiable",
+              "paper": "Schmidhuber (1990), Making the world differentiable",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/pole-balance-non-markov/pole_balance_non_markov.gif",
               "caption": "Cart-pole balancing where the controller observes only positions, not velocities. The 4-D real state is (x, x_dot, θ, θ_dot), but C only sees (x, θ). M predicts next observed positions from action + history; C trained by BP through M's gradient."
@@ -522,7 +522,7 @@
             {
               "slug": "pole-balance-markov-vac",
               "title": "pole-balance-markov-vac",
-              "paper": "Schmidhuber (1990) — Recurrent networks adjusted by adaptive critics",
+              "paper": "Schmidhuber (1990), Recurrent networks adjusted by adaptive critics",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/pole-balance-markov-vac/pole_balance_markov_vac.gif",
               "caption": "Standard cart-pole, Markov regime: the controller observes the full state at every step. K=2 vector-valued critic with two qualitatively distinct components (V_pole saturates near 1/(1-γ)=100; V_cart tracks live 1−|x|/2.4 margin)."
@@ -530,7 +530,7 @@
             {
               "slug": "saccadic-target-detection",
               "title": "saccadic-target-detection",
-              "paper": "Schmidhuber & Huber (1990) — Learning to generate focus trajectories",
+              "paper": "Schmidhuber & Huber (1990), Learning to generate focus trajectories",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/saccadic-target-detection/saccadic_target_detection.gif",
               "caption": "Active visual attention. The controller must move a small fovea over a 2-D scene to find a target halo, given only the local pixels under the fovea. C is feedforward; M predicts the change in halo at the next fovea position."
@@ -538,12 +538,12 @@
           ]
         },
         {
-          "name": "1991 — Curiosity, subgoals, the chunker",
+          "name": "1991, Curiosity, subgoals, the chunker",
           "items": [
             {
               "slug": "curiosity-three-regions",
               "title": "curiosity-three-regions",
-              "paper": "Schmidhuber (1991) — Adaptive confidence and adaptive curiosity",
+              "paper": "Schmidhuber (1991), Adaptive confidence and adaptive curiosity",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/curiosity-three-regions/curiosity_three_regions.gif",
               "caption": "A 1-D environment partitioned into three regions: deterministic / random / learnable-but-unlearned. Curiosity reward = windowed reduction in M's prediction error."
@@ -551,7 +551,7 @@
             {
               "slug": "subgoal-obstacle-avoidance",
               "title": "subgoal-obstacle-avoidance",
-              "paper": "Schmidhuber (1991) — Learning to generate sub-goals for action sequences",
+              "paper": "Schmidhuber (1991), Learning to generate sub-goals for action sequences",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/subgoal-obstacle-avoidance/subgoal_obstacle_avoidance.gif",
               "caption": "Hierarchical RL: a sub-goal generator C_high proposes K=2 waypoints, a low-level controller C_low (intentionally obstacle-blind, input = rel_target only) steers toward each."
@@ -559,7 +559,7 @@
             {
               "slug": "pomdp-flag-maze",
               "title": "pomdp-flag-maze",
-              "paper": "Schmidhuber (1991) — Reinforcement learning in Markovian and non-Markovian environments",
+              "paper": "Schmidhuber (1991), Reinforcement learning in Markovian and non-Markovian environments",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/pomdp-flag-maze/pomdp_flag_maze.gif",
               "caption": "A 2-D T-maze with a hidden flag. The agent observes only its local 4-wall context plus a 1-bit indicator that is non-zero ONLY at the start cell. Recurrent M+C architecture must latch the indicator across the full episode."
@@ -567,7 +567,7 @@
             {
               "slug": "chunker-22-symbol",
               "title": "chunker-22-symbol",
-              "paper": "Schmidhuber (1991/1992) — Neural sequence chunkers",
+              "paper": "Schmidhuber (1991/1992), Neural sequence chunkers",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/chunker-22-symbol/chunker_22_symbol.gif",
               "caption": "22-symbol alphabet streamed without episode boundaries. Two-network history compression: automatizer A predicts next symbol; chunker C only receives A's prediction failures (surprises). The 20-step lag bridge that vanilla BPTT/RTRL fails on."
@@ -575,12 +575,12 @@
           ]
         },
         {
-          "name": "1992 — Neural Computation triple",
+          "name": "1992, Neural Computation triple",
           "items": [
             {
               "slug": "fast-weights-unknown-delay",
               "title": "fast-weights-unknown-delay",
-              "paper": "Schmidhuber (1992) — Learning to control fast-weight memories",
+              "paper": "Schmidhuber (1992), Learning to control fast-weight memories",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/fast-weights-unknown-delay/fast_weights_unknown_delay.gif",
               "caption": "Two arbitrary input signals must be associated across a time gap of unknown length. Slow programmer net S (917 params, 4 heads: key/value/query/gate); W_fast updated as W_fast += eta · g_t · outer(v_t, k_t)."
@@ -588,7 +588,7 @@
             {
               "slug": "fast-weights-key-value",
               "title": "fast-weights-key-value",
-              "paper": "Schmidhuber (1992) — Learning to control fast-weight memories",
+              "paper": "Schmidhuber (1992), Learning to control fast-weight memories",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/fast-weights-key-value/fast_weights_key_value.gif",
               "caption": "A sequence of (key, value) pairs is presented one step at a time. Each step writes an outer-product update into a fast weight matrix. Retrieval = W_fast · k_query."
@@ -596,28 +596,28 @@
             {
               "slug": "predictability-min-binary-factors",
               "title": "predictability-min-binary-factors",
-              "paper": "Schmidhuber (1992) — Learning factorial codes by predictability minimization",
+              "paper": "Schmidhuber (1992), Learning factorial codes by predictability minimization",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/predictability-min-binary-factors/predictability_min_binary_factors.gif",
-              "caption": "Given an observable x produced by a fixed random linear mixing of K independent binary factors, learn an encoder E: x → y that produces a factorial code. Adversarial setup: encoder maximizes per-component predictor MSE; predictors minimize it."
+              "caption": "Given an observable x produced by a fixed random linear mixing of K independent binary factors, learn an encoder E: x to y that produces a factorial code. Adversarial setup: encoder maximizes per-component predictor MSE; predictors minimize it."
             }
           ]
         },
         {
-          "name": "1993 — Predictable classifications, self-reference, very deep chunking",
+          "name": "1993, Predictable classifications, self-reference, very deep chunking",
           "items": [
             {
               "slug": "predictable-stereo",
               "title": "predictable-stereo",
-              "paper": "Schmidhuber & Prelinger (1993) — Discovering predictable classifications",
+              "paper": "Schmidhuber & Prelinger (1993), Discovering predictable classifications",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/predictable-stereo/predictable_stereo.gif",
-              "caption": "Predictability maximization — the dual of PM. Two networks each see one view of the same synthetic stereo scene; their job is to produce scalar codes that maximally agree."
+              "caption": "Predictability maximization, the dual of PM. Two networks each see one view of the same synthetic stereo scene; their job is to produce scalar codes that maximally agree."
             },
             {
               "slug": "self-referential-weight-matrix",
               "title": "self-referential-weight-matrix",
-              "paper": "Schmidhuber (1993) — A self-referential weight matrix",
+              "paper": "Schmidhuber (1993), A self-referential weight matrix",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/self-referential-weight-matrix/self_referential_weight_matrix.gif",
               "caption": "A recurrent network whose weight matrix is itself part of the state. W_eff = W_slow + W_fast. Slow params trained by BPTT across episodes; fast plastic matrix is reset each episode and rewritten by the network's own outputs every step."
@@ -625,7 +625,7 @@
             {
               "slug": "chunker-very-deep-1200",
               "title": "chunker-very-deep-1200",
-              "paper": "Schmidhuber (1993) — Habilitationsschrift",
+              "paper": "Schmidhuber (1993), Habilitationsschrift",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/chunker-very-deep-1200/chunker_very_deep_1200.gif",
               "caption": "The Habilitationsschrift's \"very deep learning\" demonstration: the two-network neural sequence chunker doing credit assignment over roughly 1200 unrolled time-steps. Effective BPTT depth T - 1 = 1199 (raw) compresses to 2 (chunker on surprises)."
@@ -633,20 +633,20 @@
           ]
         },
         {
-          "name": "1995–1997 — Levin search and the LSTM benchmark suite",
+          "name": "1995-1997, Levin search and the LSTM benchmark suite",
           "items": [
             {
               "slug": "levin-count-inputs",
               "title": "levin-count-inputs",
-              "paper": "Schmidhuber (1995/1997) — Discovering solutions with low Kolmogorov complexity",
+              "paper": "Schmidhuber (1995/1997), Discovering solutions with low Kolmogorov complexity",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/levin-count-inputs/levin_count_inputs.gif",
-              "caption": "Find a program that maps a 100-bit input to its popcount from only 3 training examples — without gradient descent. Levin search enumerates programs ordered by len(p) + log(t). Found program: 5-instr PUSH0 HERE BIT ADD LOOP."
+              "caption": "Find a program that maps a 100-bit input to its popcount from only 3 training examples, without gradient descent. Levin search enumerates programs ordered by len(p) + log(t). Found program: 5-instr PUSH0 HERE BIT ADD LOOP."
             },
             {
               "slug": "levin-add-positions",
               "title": "levin-add-positions",
-              "paper": "Schmidhuber (1995/1997) — Discovering solutions with low Kolmogorov complexity",
+              "paper": "Schmidhuber (1995/1997), Discovering solutions with low Kolmogorov complexity",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/levin-add-positions/levin_add_positions.gif",
               "caption": "Same Levin enumeration, different target: index-sum of the bit positions where the input is 1 (induces the linear weight vector w_i = i). Found program: length-3 im+. 58 evaluations to find; 200/200 generalize on held-out."
@@ -654,7 +654,7 @@
             {
               "slug": "rs-two-sequence",
               "title": "rs-two-sequence",
-              "paper": "Hochreiter & Schmidhuber (1996) — LSTM can solve hard long time lag problems",
+              "paper": "Hochreiter & Schmidhuber (1996), LSTM can solve hard long time lag problems",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/rs-two-sequence/rs_two_sequence.gif",
               "caption": "Bengio-94 latch task. Random-weight-guessing on a small fully-recurrent net solves what BPTT/RTRL fails on. The point is the algorithm: just sample weights uniformly, run forward, score. No mutation, no crossover, no gradient."
@@ -662,7 +662,7 @@
             {
               "slug": "rs-parity",
               "title": "rs-parity",
-              "paper": "Hochreiter & Schmidhuber (1996) — LSTM can solve hard long time lag problems",
+              "paper": "Hochreiter & Schmidhuber (1996), LSTM can solve hard long time lag problems",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/rs-parity/rs_parity.gif",
               "caption": "N-bit sequence parity (XOR of all input bits) by random weight guessing on a small recurrent net. The parity solution lives in a narrow weight-space basin RS happens to hit by chance. N=50 seed 0: 10,253 trials / 15.3s;"
@@ -670,7 +670,7 @@
             {
               "slug": "rs-tomita",
               "title": "rs-tomita",
-              "paper": "Hochreiter & Schmidhuber (1996) — LSTM can solve hard long time lag problems",
+              "paper": "Hochreiter & Schmidhuber (1996), LSTM can solve hard long time lag problems",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/rs-tomita/rs_tomita.gif",
               "caption": "Random-weight guessing on Tomita grammars #1 (a), #2 ((ab)), and #4 (no aaa substring). Three regular languages of increasing difficulty. All 3 grammars solved across 10 seeds; trial counts within ~3× of paper for #1/#2, ~6× for #4."
@@ -678,7 +678,7 @@
             {
               "slug": "adding-problem",
               "title": "adding-problem",
-              "paper": "Hochreiter & Schmidhuber (1997) — Long Short-Term Memory canonical battery",
+              "paper": "Hochreiter & Schmidhuber (1997), Long Short-Term Memory canonical battery",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/adding-problem/adding_problem.gif",
               "caption": "T=100 sequences with 2-D inputs: random reals + sparse markers. Target = sum of the 2 marked values. The first non-trivial LSTM benchmark. LSTM MSE 0.0007 (50× under paper's 0.04 threshold); vanilla RNN MSE 0.0706 (gradient vanishes);"
@@ -686,23 +686,23 @@
             {
               "slug": "embedded-reber",
               "title": "embedded-reber",
-              "paper": "Hochreiter & Schmidhuber (1997) — Long Short-Term Memory canonical battery",
+              "paper": "Hochreiter & Schmidhuber (1997), Long Short-Term Memory canonical battery",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/embedded-reber/embedded_reber.gif",
-              "caption": "Reber grammar wrapped with outer T/P matching pair (long-range dependency). Original 1997 LSTM (input + output gate, no forget gate). 10/10 seeds, mean 4800 sequences vs paper 8440 — 1.8× faster with Adam + negative gate-bias init."
+              "caption": "Reber grammar wrapped with outer T/P matching pair (long-range dependency). Original 1997 LSTM (input + output gate, no forget gate). 10/10 seeds, mean 4800 sequences vs paper 8440-1.8× faster with Adam + negative gate-bias init."
             },
             {
               "slug": "noise-free-long-lag",
               "title": "noise-free-long-lag",
-              "paper": "Hochreiter & Schmidhuber (1997) — Long Short-Term Memory canonical battery",
+              "paper": "Hochreiter & Schmidhuber (1997), Long Short-Term Memory canonical battery",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/noise-free-long-lag/noise_free_long_lag.gif",
-              "caption": "Two locally-encoded sequences (y, a₁,…,a_{p−1}, y) and (x, a₁,…,a_{p−1}, x). Sub-variant (a) at p=50: solved at sequence 600. Last-step gradient weighting trick (×100) keeps Adam's per-step normalisation from drowning out the rare long-lag signal."
+              "caption": "Two locally-encoded sequences (y, a₁,...,a_{p−1}, y) and (x, a₁,...,a_{p−1}, x). Sub-variant (a) at p=50: solved at sequence 600."
             },
             {
               "slug": "two-sequence-noise",
               "title": "two-sequence-noise",
-              "paper": "Hochreiter & Schmidhuber (1997) — Long Short-Term Memory canonical battery",
+              "paper": "Hochreiter & Schmidhuber (1997), Long Short-Term Memory canonical battery",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/two-sequence-noise/two_sequence_noise.gif",
               "caption": "Variant 3c (target noise σ=0.32). Canonical 1997 LSTM, 3 blocks × 2 cells = 6 cells, 103 params. Output-gate biases per block = -2, -4, -6 (paper's recipe). 4/4 seeds 100% accuracy on noiseless test sequences."
@@ -710,15 +710,15 @@
             {
               "slug": "multiplication-problem",
               "title": "multiplication-problem",
-              "paper": "Hochreiter & Schmidhuber (1997) — Long Short-Term Memory canonical battery",
+              "paper": "Hochreiter & Schmidhuber (1997), Long Short-Term Memory canonical battery",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/multiplication-problem/multiplication_problem.gif",
-              "caption": "Same as adding-problem but target = product of the 2 marked values. LSTM with forget gate (Gers 2000). MSE 0.0028 at T=30 (17× chance); 3/5 seeds converge — paper-faithful per-seed brittleness."
+              "caption": "Same as adding-problem but target = product of the 2 marked values. LSTM with forget gate (Gers 2000). MSE 0.0028 at T=30 (17× chance); 3/5 seeds converge, paper-faithful per-seed brittleness."
             },
             {
               "slug": "temporal-order-3bit",
               "title": "temporal-order-3bit",
-              "paper": "Hochreiter & Schmidhuber (1997) — Long Short-Term Memory canonical battery",
+              "paper": "Hochreiter & Schmidhuber (1997), Long Short-Term Memory canonical battery",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/temporal-order-3bit/temporal_order_3bit.gif",
               "caption": "Two information-carrying symbols X, Y at unknown positions; classify the temporal order (XX, XY, YX, YY). Original 1997 LSTM (no forget gate). 5/5 seeds 100%, median ~6.4k seqs vs paper 31,390 (Adam advantage). Vanilla RNN at chance 0.25."
@@ -726,7 +726,7 @@
             {
               "slug": "pipe-symbolic-regression",
               "title": "pipe-symbolic-regression",
-              "paper": "Salustowicz & Schmidhuber (1997) — Probabilistic Incremental Program Evolution",
+              "paper": "Salustowicz & Schmidhuber (1997), Probabilistic Incremental Program Evolution",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/pipe-symbolic-regression/pipe_symbolic_regression.gif",
               "caption": "Symbolic regression on Koza's classic benchmark f(x) = x⁴ + x³ + x² + x. Probabilistic Prototype Tree (PPT) over {+, −, *, /, x, R}. PBIL update toward elite at every visited node; per-component mutation along elite path. No gradient, no crossover."
@@ -734,7 +734,7 @@
             {
               "slug": "pipe-6-bit-parity",
               "title": "pipe-6-bit-parity",
-              "paper": "Salustowicz & Schmidhuber (1997) — Probabilistic Incremental Program Evolution",
+              "paper": "Salustowicz & Schmidhuber (1997), Probabilistic Incremental Program Evolution",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/pipe-6-bit-parity/pipe_6_bit_parity.gif",
               "caption": "Same PIPE machinery on Boolean function set {AND, OR, NOT, IF, x_0..x_5}. Bitmask program evaluator runs all 64 inputs in O(tree_size) bitwise ops. 4-bit even parity solves cleanly at gen 258 (16/16); 6-bit reaches 71.9% at the 240s budget cap."
@@ -742,7 +742,7 @@
             {
               "slug": "ssa-bias-transfer-mazes",
               "title": "ssa-bias-transfer-mazes",
-              "paper": "Schmidhuber, Zhao, Wiering (1997) — Shifting inductive bias with SSA",
+              "paper": "Schmidhuber, Zhao, Wiering (1997), Shifting inductive bias with SSA",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/ssa-bias-transfer-mazes/ssa_bias_transfer_mazes.gif",
               "caption": "Success-story algorithm: keep a stack of policy modifications; only retain modifications that produce statistically significant lifetime-reward improvements (history-conditioned, not per-task). Bias from one task transfers to the next."
@@ -750,7 +750,7 @@
             {
               "slug": "hq-learning-pomdp",
               "title": "hq-learning-pomdp",
-              "paper": "Wiering & Schmidhuber (1997) — HQ-learning",
+              "paper": "Wiering & Schmidhuber (1997), HQ-learning",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/hq-learning-pomdp/hq_learning_pomdp.gif",
               "caption": "Hierarchical Q(λ) for POMDP. M sub-agents with their own Q-tables; control transfers between sub-agents at sub-goal observations. Honest non-replication: paper's HQ-vs-flat gap doesn't reproduce on the 29-cell maze."
@@ -758,28 +758,28 @@
             {
               "slug": "semilinear-pm-image-patches",
               "title": "semilinear-pm-image-patches",
-              "paper": "Schmidhuber, Eldracher, Foltin (1996) — Semilinear PM",
+              "paper": "Schmidhuber, Eldracher, Foltin (1996), Semilinear PM",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/semilinear-pm-image-patches/semilinear_pm_image_patches.gif",
-              "caption": "Linear encoder y = Wx on the Stiefel manifold (polar projection after every step). Predictor input is the standardised squared code z = (y² - μ) / σ (the squaring is the one nonlinearity — \"semilinear\")."
+              "caption": "Linear encoder y = Wx on the Stiefel manifold (polar projection after every step). Predictor input is the standardised squared code z = (y² - μ) / σ (the squaring is the one nonlinearity, \"semilinear\")."
             },
             {
               "slug": "lococode-ica",
               "title": "lococode-ica",
-              "paper": "Hochreiter & Schmidhuber (1999) — LOCOCODE",
+              "paper": "Hochreiter & Schmidhuber (1999), LOCOCODE",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/lococode-ica/lococode_ica.gif",
-              "caption": "Tied autoencoder + L1 sparsity on whitened input (surrogate for the paper's flat-minimum-search Hessian penalty). On synthetic Laplacian sources: Amari distance 0.093 — 4× better than PCA (0.388), within 5× of FastICA (0.022)."
+              "caption": "Tied autoencoder + L1 sparsity on whitened input (surrogate for the paper's flat-minimum-search Hessian penalty). On synthetic Laplacian sources: Amari distance 0.093-4× better than PCA (0.388), within 5× of FastICA (0.022)."
             }
           ]
         },
         {
-          "name": "2000–2002 — LSTM follow-ups",
+          "name": "2000-2002, LSTM follow-ups",
           "items": [
             {
               "slug": "continual-embedded-reber",
               "title": "continual-embedded-reber",
-              "paper": "Gers, Schmidhuber, Cummins (2000) — Learning to forget",
+              "paper": "Gers, Schmidhuber, Cummins (2000), Learning to forget",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/continual-embedded-reber/continual_embedded_reber.gif",
               "caption": "Embedded Reber strings concatenated without any episode reset. Mechanism contrast made visible: forget-gate LSTM cell-state norm stabilizes at ~25; no-forget-gate norm grows to ~295 across the stream. Forget gates drop at end-of-string offsets."
@@ -787,15 +787,15 @@
             {
               "slug": "anbn-anbncn",
               "title": "anbn-anbncn",
-              "paper": "Gers & Schmidhuber (2001) — Context-free and context-sensitive languages",
+              "paper": "Gers & Schmidhuber (2001), Context-free and context-sensitive languages",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/anbn-anbncn/anbn_anbncn.gif",
-              "caption": "Two formal languages: a^n b^n (context-free) and a^n b^n c^n (context-sensitive). Peephole LSTM (Gers 2002 cell). Cell 0 emerges as a clean linear counter — charges during a's, discharges during b's. Trained n=1..10 → generalizes a^n b^n to n=1..65;"
+              "caption": "Two formal languages: a^n b^n (context-free) and a^n b^n c^n (context-sensitive). Peephole LSTM (Gers 2002 cell). Cell 0 emerges as a clean linear counter, charges during a's, discharges during b's. Trained n=1..10 to generalizes a^n b^n to n=1..65;"
             },
             {
               "slug": "timing-counting-spikes",
               "title": "timing-counting-spikes",
-              "paper": "Gers, Schraudolph, Schmidhuber (2002) — Learning precise timing",
+              "paper": "Gers, Schraudolph, Schmidhuber (2002), Learning precise timing",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/timing-counting-spikes/timing_counting_spikes.gif",
               "caption": "Measure-Spike-Distance (MSD): two input spikes at t1 < t2; network must fire at t1 + 2·(t2 - t1). Peephole LSTM (cell state feeds gates). One cell develops an analog interval timer across the inter-spike gap."
@@ -803,20 +803,20 @@
             {
               "slug": "blues-improvisation",
               "title": "blues-improvisation",
-              "paper": "Eck & Schmidhuber (2002) — Blues improvisation",
+              "paper": "Eck & Schmidhuber (2002), Blues improvisation",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/blues-improvisation/blues_improvisation.gif",
-              "caption": "12-bar bebop blues. Fixed chord progression: C7 C7 C7 C7 / F7 F7 C7 C7 / G7 F7 C7 C7. 2-layer stacked LSTM (chord layer H1=20 → melody layer H2=24). 8 hand-synthesized 12-bar choruses (no external MIDI). 12/12 bar-onset chord match;"
+              "caption": "12-bar bebop blues. Fixed chord progression: C7 C7 C7 C7 / F7 F7 C7 C7 / G7 F7 C7 C7. 2-layer stacked LSTM (chord layer H1=20 to melody layer H2=24). 8 hand-synthesized 12-bar choruses (no external MIDI). 12/12 bar-onset chord match;"
             }
           ]
         },
         {
-          "name": "2002–2010 — Evolutionary RL, OOPS, BLSTM+CTC",
+          "name": "2002-2010, Evolutionary RL, OOPS, BLSTM+CTC",
           "items": [
             {
               "slug": "evolino-sines-mackey-glass",
               "title": "evolino-sines-mackey-glass",
-              "paper": "Schmidhuber, Wierstra, Gomez (2005/2007) — Evolino",
+              "paper": "Schmidhuber, Wierstra, Gomez (2005/2007), Evolino",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/evolino-sines-mackey-glass/evolino_sines_mackey_glass.gif",
               "caption": "Hybrid neuroevolution + linear regression for sequence learning. LSTM hidden weights evolved by population selection + gaussian mutation + crossover;"
@@ -824,15 +824,15 @@
             {
               "slug": "double-pole-no-velocity",
               "title": "double-pole-no-velocity",
-              "paper": "Gomez & Schmidhuber (2005) — Co-evolving recurrent neurons",
+              "paper": "Gomez & Schmidhuber (2005), Co-evolving recurrent neurons",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/double-pole-no-velocity/double_pole_no_velocity.gif",
-              "caption": "Cart with two stacked poles of different lengths (canonical hard non-Markov RL benchmark). Hidden velocities — only positions observed. Wieland 1991 double cart-pole sim in numpy, RK4 integration."
+              "caption": "Cart with two stacked poles of different lengths (canonical hard non-Markov RL benchmark). Hidden velocities, only positions observed. Wieland 1991 double cart-pole sim in numpy, RK4 integration."
             },
             {
               "slug": "timit-blstm-ctc",
               "title": "timit-blstm-ctc",
-              "paper": "Graves et al. (2005/2006) — BLSTM and Connectionist Temporal Classification",
+              "paper": "Graves et al. (2005/2006), BLSTM and Connectionist Temporal Classification",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/timit-blstm-ctc/timit_blstm_ctc.gif",
               "caption": "Synthetic phoneme corpus (K=6 phonemes, 8 mel-like bands, co-articulated shared-onset clusters so future context disambiguates). Bidirectional LSTM + log-space CTC forward-backward. BLSTM 1.87× faster than uni-LSTM (5/5 seeds 300 vs 560 iters);"
@@ -840,7 +840,7 @@
             {
               "slug": "iam-handwriting",
               "title": "iam-handwriting",
-              "paper": "Graves, Liwicki, Fernández, Bertolami, Bunke, Schmidhuber (2009) — Unconstrained handwriting",
+              "paper": "Graves, Liwicki, Fernández, Bertolami, Bunke, Schmidhuber (2009), Unconstrained handwriting",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/iam-handwriting/iam_handwriting.gif",
               "caption": "10-character hand-crafted alphabet, each glyph from ellipse arcs + line segments; 47-word vocab; per-word affine slant + per-point Gaussian jitter. BLSTM + CTC reads pen-trajectory data. In-vocab CER 0.082 / word acc 0.77;"
@@ -848,7 +848,7 @@
             {
               "slug": "oops-towers-of-hanoi",
               "title": "oops-towers-of-hanoi",
-              "paper": "Schmidhuber (2002–2004) — Optimal Ordered Problem Solver",
+              "paper": "Schmidhuber (2002-2004), Optimal Ordered Problem Solver",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/oops-towers-of-hanoi/oops_towers_of_hanoi.gif",
               "caption": "Towers of Hanoi: move n disks from peg 0 to peg 2; optimal solution length 2^n - 1. OOPS = Levin search with reusable subroutines. Discovers 6-token recursive solver SD C SD M SA C at n=3; reuses with zero search from n=4 onward."
@@ -856,20 +856,20 @@
           ]
         },
         {
-          "name": "2010–2017 — Deep learning at scale",
+          "name": "2010-2017, Deep learning at scale",
           "items": [
             {
               "slug": "mnist-deep-mlp",
               "title": "mnist-deep-mlp",
-              "paper": "Cireşan, Meier, Gambardella, Schmidhuber (2010) — Deep, big, simple nets",
+              "paper": "Cireşan, Meier, Gambardella, Schmidhuber (2010), Deep, big, simple nets",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/mnist-deep-mlp/mnist_deep_mlp.gif",
-              "caption": "MNIST classification with a plain feedforward MLP — no convolution, no pretraining, no model averaging — on heavily deformed training data. Per-batch affine + Simard elastic deformation in pure numpy (separable Gaussian + bilinear sampling)."
+              "caption": "MNIST classification with a plain feedforward MLP, no convolution, no pretraining, no model averaging, on heavily deformed training data. Per-batch affine + Simard elastic deformation in pure numpy (separable Gaussian + bilinear sampling)."
             },
             {
               "slug": "mcdnn-image-bench",
               "title": "mcdnn-image-bench",
-              "paper": "Cireşan, Meier, Schmidhuber (2012) — Multi-column DNN",
+              "paper": "Cireşan, Meier, Schmidhuber (2012), Multi-column DNN",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/mcdnn-image-bench/mcdnn_image_bench.gif",
               "caption": "Single-column 4-layer ReLU MLP on MNIST (paper's multi-column ensemble + GTSRB/CASIA deferred to v1.5). 1.46% test err; multi-seed mean 1.47% ± 0.03%. Honest gap: paper 35-column ensemble 0.23%, single CNN ~0.4%."
@@ -877,7 +877,7 @@
             {
               "slug": "em-segmentation-isbi",
               "title": "em-segmentation-isbi",
-              "paper": "Cireşan, Giusti, Gambardella, Schmidhuber (2012) — EM segmentation",
+              "paper": "Cireşan, Giusti, Gambardella, Schmidhuber (2012), EM segmentation",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/em-segmentation-isbi/em_segmentation_isbi.gif",
               "caption": "Synthetic Voronoi-EM substitute for ISBI 2012 stack: random Voronoi tessellation + dark 1-px boundaries + per-cell intensity + Gaussian noise + sparse organelles + 3×3 PSF blur. MLP pixel classifier on 32×32 patches."
@@ -885,15 +885,15 @@
             {
               "slug": "compete-to-compute",
               "title": "compete-to-compute",
-              "paper": "Srivastava, Masci, Kazerounian, Gomez, Schmidhuber (2013) — Compete to compute",
+              "paper": "Srivastava, Masci, Kazerounian, Gomez, Schmidhuber (2013), Compete to compute",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/compete-to-compute/compete_to_compute.gif",
-              "caption": "LWTA (Local Winner-Take-All): groups of k=2 units per layer; only the per-group winner forwards activations, others zero out; gradient flows only through the winner. Sequential 2-task MNIST split (digits 0-4 → 5-9)."
+              "caption": "LWTA (Local Winner-Take-All): groups of k=2 units per layer; only the per-group winner forwards activations, others zero out; gradient flows only through the winner. Sequential 2-task MNIST split (digits 0-4 to 5-9)."
             },
             {
               "slug": "highway-networks",
               "title": "highway-networks",
-              "paper": "Srivastava, Greff, Schmidhuber (2015) — Highway Networks",
+              "paper": "Srivastava, Greff, Schmidhuber (2015), Highway Networks",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/highway-networks/highway_networks.gif",
               "caption": "Gated deep MLP: y = H(x)·T(x) + x·(1−T(x)) with learned sigmoid gate T. Depth comparison 5/10/20/30/50: highway stable at all depths (0.926 at depth 30); plain MLP dies past depth 10 (stuck at chance 0.124)."
@@ -901,7 +901,7 @@
             {
               "slug": "lstm-search-space-odyssey",
               "title": "lstm-search-space-odyssey",
-              "paper": "Greff, Srivastava, Koutník, Steunebrink, Schmidhuber (2017) — LSTM Search Space Odyssey",
+              "paper": "Greff, Srivastava, Koutník, Steunebrink, Schmidhuber (2017), LSTM Search Space Odyssey",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/lstm-search-space-odyssey/lstm_search_space_odyssey.gif",
               "caption": "8 LSTM variants in one ablation matrix: V (vanilla), NIG (no input gate), NFG (no forget gate), NOG (no output gate), NIAF (no input activation), NOAF (no output activation), CIFG (coupled input-forget), NP (no peepholes)."
@@ -909,7 +909,7 @@
             {
               "slug": "clockwork-rnn",
               "title": "clockwork-rnn",
-              "paper": "Koutník, Greff, Gomez, Schmidhuber (2014) — Clockwork RNN",
+              "paper": "Koutník, Greff, Gomez, Schmidhuber (2014), Clockwork RNN",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/clockwork-rnn/clockwork_rnn.gif",
               "caption": "Standard Elman RNN with hidden layer partitioned into G modules. Each module g has a clock period T_g; at timestep t a module updates only when t mod T_g == 0. Forward connections only flow from slower clocks to faster clocks."
@@ -917,15 +917,15 @@
             {
               "slug": "torcs-vision-evolution",
               "title": "torcs-vision-evolution",
-              "paper": "Koutník, Cuccu, Schmidhuber, Gomez (2013) — Vision-based RL via evolution",
+              "paper": "Koutník, Cuccu, Schmidhuber, Gomez (2013), Vision-based RL via evolution",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/torcs-vision-evolution/torcs_vision_evolution.gif",
-              "caption": "Numpy oval racing track + 16×16 pixel observation. MLP 256→16→1 with W1 parameterized by a 4×4=16 low-frequency 2-D DCT block per hidden unit (decoded via precomputed orthonormal IDCT-II matrix)."
+              "caption": "Numpy oval racing track + 16×16 pixel observation. MLP 256 to 16 to 1 with W1 parameterized by a 4×4=16 low-frequency 2-D DCT block per hidden unit (decoded via precomputed orthonormal IDCT-II matrix)."
             },
             {
               "slug": "neural-em-shapes",
               "title": "neural-em-shapes",
-              "paper": "Greff, van Steenkiste, Schmidhuber (2017) — Neural EM",
+              "paper": "Greff, van Steenkiste, Schmidhuber (2017), Neural EM",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/neural-em-shapes/neural_em_shapes.gif",
               "caption": "Unsupervised perceptual grouping. K=3 slot Neural EM with manual BPTT through T=4 unrolled EM iterations. E-step softmax over pixel likelihoods, M-step tanh recurrence on bottlenecked H=24 (forces specialisation)."
@@ -933,20 +933,20 @@
             {
               "slug": "relational-nem-bouncing-balls",
               "title": "relational-nem-bouncing-balls",
-              "paper": "van Steenkiste, Chang, Greff, Schmidhuber (2018) — Relational Neural EM",
+              "paper": "van Steenkiste, Chang, Greff, Schmidhuber (2018), Relational Neural EM",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/relational-nem-bouncing-balls/relational_nem_bouncing_balls.gif",
-              "caption": "Bouncing balls with elastic equal-mass collisions. Oracle 4-D slot state (x, y, vx, vy). Non-relational baseline: MLP_dyn(s_k); relational: MLP_msg(s_k, s_j) → mean aggregation → MLP_dyn(s_k, agg_k). Relational wins K=3,4,5;"
+              "caption": "Bouncing balls with elastic equal-mass collisions. Oracle 4-D slot state (x, y, vx, vy). Non-relational baseline: MLP_dyn(s_k); relational: MLP_msg(s_k, s_j) to mean aggregation to MLP_dyn(s_k, agg_k). Relational wins K=3,4,5;"
             }
           ]
         },
         {
-          "name": "2018–2025 — World models, fast-weight Transformers, systematic generalization",
+          "name": "2018-2025, World models, fast-weight Transformers, systematic generalization",
           "items": [
             {
               "slug": "world-models-carracing",
               "title": "world-models-carracing",
-              "paper": "Ha & Schmidhuber (2018) — Recurrent World Models",
+              "paper": "Ha & Schmidhuber (2018), Recurrent World Models",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/world-models-carracing/world_models_carracing.gif",
               "caption": "Numpy 2-D top-down racing track substitute for CarRacing-v0. Centerline = closed loop generated from low-frequency sinusoids; agent observes a 16×16 patch of mask, rotated to car frame."
@@ -954,7 +954,7 @@
             {
               "slug": "world-models-vizdoom-dream",
               "title": "world-models-vizdoom-dream",
-              "paper": "Ha & Schmidhuber (2018) — Recurrent World Models",
+              "paper": "Ha & Schmidhuber (2018), Recurrent World Models",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/world-models-vizdoom-dream/world_models_vizdoom_dream.gif",
               "caption": "Numpy 5×5 gridworld dodging-fireballs analog of DoomTakeCover. The paper's \"DoomRNN dream\" experiment: controller C is trained ENTIRELY inside M's rollouts (no real-env interaction during training), then transferred zero-shot to the real env."
@@ -962,15 +962,15 @@
             {
               "slug": "upside-down-rl",
               "title": "upside-down-rl",
-              "paper": "Schmidhuber et al. (2019) — Reinforcement Learning Upside Down",
+              "paper": "Schmidhuber et al. (2019), Reinforcement Learning Upside Down",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/upside-down-rl/upside_down_rl.gif",
-              "caption": "Standard RL fits a value function or policy gradient. UDRL inverts: the policy is a supervised mapping from (state, desired_return, time_horizon) → action. Numpy 9-state chain MDP per SPEC's RL-stub rule (paper used LunarLanderSparse)."
+              "caption": "Standard RL fits a value function or policy gradient. UDRL inverts: the policy is a supervised mapping from (state, desired_return, time_horizon) to action. Numpy 9-state chain MDP per SPEC's RL-stub rule (paper used LunarLanderSparse)."
             },
             {
               "slug": "linear-transformers-fwp",
               "title": "linear-transformers-fwp",
-              "paper": "Schlag, Irie, Schmidhuber (2021) — Linear Transformers ARE Fast Weight Programmers",
+              "paper": "Schlag, Irie, Schmidhuber (2021), Linear Transformers ARE Fast Weight Programmers",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/linear-transformers-fwp/linear_transformers_fwp.gif",
               "caption": "The cleanest result of the catalog: linear self-attention V^T(Kq) and the 1992 fast-weight programmer (V^T K)q compute the same numpy expression. Equivalence verified to 2.22e-16 (1 ulp at float64) on every input tested."
@@ -978,7 +978,7 @@
             {
               "slug": "neural-data-router",
               "title": "neural-data-router",
-              "paper": "Csordás, Irie, Schmidhuber (2022) — The Neural Data Router",
+              "paper": "Csordás, Irie, Schmidhuber (2022), The Neural Data Router",
               "star": false,
               "gif": "https://cybertronai.github.io/schmidhuber-problems/neural-data-router/neural_data_router.gif",
               "caption": "Compositional table lookup: 4 values × 4 functions × depth-d expressions. NDR adds two switches to a Transformer: geometric attention (per-query distance-ordered scan, \"stop at first match\") + per-position copy gate."

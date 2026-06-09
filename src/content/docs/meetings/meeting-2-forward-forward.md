@@ -48,7 +48,7 @@ The paper is available as a [Google Doc summary](https://docs.google.com/documen
 - Reproduce MNIST with a simple PyTorch implementation.
 - Visualize the negative data: change the negative-generation method (random noise vs. permuted pixels) and observe how accuracy collapses. This shows the algorithm relies entirely on the quality of the hallucinations.
 - The "sandwich" method: train the first 3 layers with FF as a feature extractor, freeze them, then train a standard linear classifier (softmax) on top with backprop. This gives O(1) inference while still using FF for feature learning.
-- Permutation-invariance test: flatten MNIST images and shuffle the pixels, then train an FF network. It often performs surprisingly well compared to ConvNets, highlighting that FF relies on global correlations rather than local geometry.
+- Permutation-invariance test: flatten MNIST images and shuffle the pixels, then train an FF network. It often performs surprisingly well compared to ConvNets, which shows that FF relies on global correlations rather than local geometry.
 
 **Advanced reading.**
 

@@ -19,4 +19,4 @@ The baseline `modded_nanogpt` runs at 54,784 J, 0.7285 character-accuracy, 322.7
 
 ## Who is active
 
-Armins (lead), Gabriel Nakajima An. See the [June recap](/recaps/2026-06).
+Armins (lead), Gabriel Nakajima An. See the [June recap](/recaps/2026-06/).

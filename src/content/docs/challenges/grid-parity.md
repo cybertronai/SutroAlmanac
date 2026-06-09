@@ -19,4 +19,4 @@ Launched May 8. Precomputing intermediate XORs plus bit-packing works well; tili
 
 ## Open questions
 
-Whether continuous floating-point ops are needed at all, or whether integer and 8-bit instruction sets are better, since fewer ops means fewer hidden free optimizations for agents to exploit. See the [May recap](/recaps/2026-05).
+Whether continuous floating-point ops are needed at all, or whether integer and 8-bit instruction sets are better, since fewer ops means fewer hidden free optimizations for agents to exploit. See the [May recap](/recaps/2026-05/).

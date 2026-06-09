@@ -66,16 +66,9 @@ forward-forward entry reaches about 0.39 accuracy at roughly 10× fewer Joules. 
 whether to count CPU energy (RAPL), and whether cross-entropy becomes a separate
 scored track. Active: Armins, Gabriel Nakajima An.
 
-## SutroAna and adjacent frameworks
+## Yad's tooling
 
-- **[SutroAna](https://github.com/adotzh/SutroAna)** (Anastasiia Zhiboedova): an agent
-  harness for a focused "improve this one problem" loop, applied to the matmul
-  challenge. Yaroslav confirmed it runs out of the box. Shared in early May.
-- **autoresearch-distillation** (Silen Naihin): a parallel auto-research effort with
-  its own experiment-organization pattern (a root hypothesis README, a
-  next-experiments file, an experiments log).
-
-## The tooling underneath
+SutroYaro is the flagship, the hub the rest of the work hangs off.
 
 - **[SutroYaro](https://github.com/cybertronai/SutroYaro)**: Yad's research workspace
   and the lab's dispatch hub. It holds the locked evaluation harness, the autonomous
@@ -84,6 +77,15 @@ scored track. Active: Armins, Gabriel Nakajima An.
 - **[StackUnderflow](https://github.com/0bserver07/StackUnderflow)**: Yad's
   session-indexing tool. It indexes past AI coding sessions so prior decisions and
   failures can be queried before redoing work.
+
+## Adjacent frameworks
+
+- **[SutroAna](https://github.com/adotzh/SutroAna)** (Anastasiia Zhiboedova): an agent
+  harness for a focused "improve this one problem" loop, applied to the matmul
+  challenge. Yaroslav confirmed it runs out of the box. Shared in early May.
+- **autoresearch-distillation** (Silen Naihin): a parallel auto-research effort with
+  its own experiment-organization pattern. A root hypothesis README sits at the top,
+  with a next-experiments file and a running experiments log beneath it.
 
 ## Open questions
 

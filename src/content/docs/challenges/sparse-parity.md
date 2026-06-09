@@ -19,7 +19,7 @@ The pipeline is live, with submissions as recent as May 12. KM-min and GF(2) eli
 
 ## The result that settled it
 
-GF(2) Gaussian elimination solves parity directly, about 1000x faster than SGD, because parity is linear over GF(2). Local learning rules (Hebbian, predictive coding, equilibrium propagation, target propagation) all fail at chance, since parity has no low-order statistical signal. See the [March recap](/recaps/2026-03).
+GF(2) Gaussian elimination solves parity directly, about 1000x faster than SGD, because parity is linear over GF(2). Local learning rules (Hebbian, predictive coding, equilibrium propagation, target propagation) all fail at chance, since parity has no low-order statistical signal. See the [March recap](/recaps/2026-03/).
 
 ## Open question
 

@@ -15,8 +15,8 @@ The Dally 2D-grid cost model.
 
 ## State
 
-Active hill-climbing. The 16x16 record fell from 68,452 (Sung Jae Bae, May 5) to 68,392 (Cosmin Negruseri, May 13) to 67,821 (mid-May), with Cosmin running a Codex-driven auto-research loop that produced a steady stream of small PRs. Lower bounds are an open hard problem: an agent-generated bound was wrong on inspection, and AlphaTensor could not bound 4x4 either.
+Active hill-climbing. The 16x16 record stands at 67,821 (mid-May), down from 68,452 (Sung Jae Bae, May 5) and 68,392 (Cosmin Negruseri, May 13). Cosmin ran a Codex-driven auto-research loop that produced a steady stream of small PRs. Lower bounds are an open hard problem: an agent-generated bound was wrong on inspection, and AlphaTensor could not bound 4x4 either.
 
 ## Who is active
 
-Cosmin Negruseri, Sung Jae Bae, Anastasiia Zhiboedova. See the [May recap](/recaps/2026-05).
+Cosmin Negruseri, Sung Jae Bae, Anastasiia Zhiboedova. See the [May recap](/recaps/2026-05/).

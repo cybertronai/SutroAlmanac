@@ -9,8 +9,8 @@ Source: [Google Doc](https://docs.google.com/document/d/1s3tv_9dGgULZgLWy8Vx6_FR
 
 - Hardware vs. algorithm misalignment: a fundamental disconnect exists between math and algorithm designers and hardware engineers. Current AI algorithms such as gradient descent are legacy paradigms designed for serial CPUs, yet they are duct-taped onto parallel GPUs.
 - The energy cost of memory: memory fetches dominate energy consumption. A simple ALU addition costs roughly 0.03 picojoules, while a DRAM fetch costs approximately 640 picojoules. This bottleneck dictates the need for custom learning methods that keep data close to the compute unit.
-- Metrics for energy efficiency: measuring energy natively is difficult, so the group uses Average Reuse Distance (ARD) as a proxy for cache hit rate. ARD cannot distinguish an algorithm that consistently hits the cache from one that oscillates between hits and massive memory fetches. Data Movement Complexity (DMC), which assumes an LRU (Least Recently Used) cache model, is being explored as a more robust metric.
-- Agentic AI research: the group is automating algorithmic discovery. Germain built a Replit-based "Research OS" with distinct agent roles (researcher, supervisor, verifier) to iteratively test code. A recurring issue is that agents try to game the evaluation metrics, finding shortcuts by rewriting the measurement code rather than improving the actual algorithm.
+- Metrics for energy efficiency: measuring energy natively is difficult, so the group uses Average Reuse Distance (ARD) as a proxy for cache hit rate. ARD cannot distinguish an algorithm that consistently hits the cache from one that oscillates between hits and massive memory fetches. Data Movement Complexity (DMC), which assumes an LRU (Least Recently Used) cache model, is being explored as a more reliable metric.
+- Agentic AI research: the group is automating algorithmic discovery. Germain built a Replit-based "Research OS" where separate agents act as researcher, supervisor, and verifier to iteratively test code. A recurring issue is that agents try to game the evaluation metrics, finding shortcuts by rewriting the measurement code rather than improving the actual algorithm.
 - Startup ecosystem and VC pressures: traditional VC funding often forces founders into demonstrating premature product-market fit, leading to fake work such as forcing analog computers to run transformers just to appease investors. Non-profit models like EleutherAI or Focused Research Organizations (FROs) are discussed as viable alternatives.
 
 ## Fact-checks
@@ -29,7 +29,7 @@ Source: [Google Doc](https://docs.google.com/document/d/1s3tv_9dGgULZgLWy8Vx6_FR
 - The memory wall and physics of computation: the energy cost of moving data far exceeds the cost of computation. The group is looking beyond gradient descent toward algorithms that natively optimize for the memory hierarchy, using DMC as a guiding metric.
 - Agent-driven discovery and the GF(2) breakthrough: Yad built an autonomous framework that surveyed the sparse parity problem, concluded gradient descent was the wrong tool, and implemented a GF(2) algebraic solver that was far faster and far more memory-efficient than SGD.
 - The gaming of metrics: in autonomous agent loops via the Replit Research OS, agents often rewrote the ARD evaluation code to achieve artificially high scores rather than improving the algorithm. This shows the need to isolate the measurement code from the agents.
-- NVIDIA's hardware lock-in strategy: NVIDIA maintains its moat not only through CUDA but by continuously shifting market requirements. Because competing ASIC startups take 5 to 10 years to tape out, their rigid architectures can become obsolete before they ship.
+- NVIDIA's hardware lock-in strategy: NVIDIA maintains its moat through CUDA and by continuously shifting market requirements. Because competing ASIC startups take 5 to 10 years to tape out, their rigid architectures can become obsolete before they ship.
 
 ## People participating
 
@@ -55,11 +55,11 @@ Source: [Google Doc](https://docs.google.com/document/d/1s3tv_9dGgULZgLWy8Vx6_FR
 
 - Boris Ginsburg: heuristic that a successful AI hardware company needs 50 hardware engineers for every 150 software engineers.
 - Chris Lattner: leader of Modular, noted for a pure software and compiler approach to AI infrastructure.
-- Mark Saroufim: creator of GPU Mode at Meta. Being courted by well-funded neo-labs but conflicted about leaving.
-- Jerry Tworek: former OpenAI employee raising 1B USD, recruiting via private retreats.
+- Mark Saroufim: creator of GPU Mode at Meta.
+- Jerry Tworek: former OpenAI employee, mentioned in the context of a new fundraising effort.
 - Jamie Simon: noted for implementing the Forward-Forward algorithm efficiently.
 - Jonathan: a former co-worker of Yaroslav's, noted for pure research on SAT solvers.
-- Andrew Dai: founder of Elorian; referenced as a benchmark for AI founder salary negotiations.
+- Andrew Dai: founder of Elorian; referenced in a discussion of AI founder compensation.
 - Sam Altman and Mark Zuckerberg: referenced via an interview where Zuckerberg advocated for securing product-market fit before formalizing a company to avoid investor misalignment.
 - Doug Gahn: experienced VLSI designer looking to transition into AI.
 - Amir: an FPGA engineer who may bring useful insights to future meetings.

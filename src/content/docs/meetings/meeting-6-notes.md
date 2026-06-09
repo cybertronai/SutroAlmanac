@@ -23,7 +23,7 @@ Reference materials shown:
 
 ## Participants and backgrounds
 
-The Sutro Group is a volunteer-driven initiative of veteran AI researchers, hardware engineers, and domain outsiders united by the goal of finding energy-efficient, hardware-native alternatives to backpropagation.
+The Sutro Group is a volunteer-driven initiative of veteran AI researchers and hardware engineers, plus a few people from outside the field, united by the goal of finding energy-efficient, hardware-native alternatives to backpropagation.
 
 - Yaroslav Bulatov (host and organizer): A 20-plus year AI veteran who led the first deep learning deployment at Google and worked on gradient checkpointing at OpenAI. He beat Google in the 2018 DawnBench competition by optimizing infrastructure to reduce iteration times to 10 seconds. He is unretiring to disrupt Nvidia's software monopoly using AI agents.
 - Michael Keating: Comes from a climate tech and electric mobility background. Currently an executive at a data center cooling tech startup. He advised Yaroslav on project governance, suggesting long-term patient capital such as family offices or sovereign wealth funds over traditional venture capital.
@@ -31,7 +31,7 @@ The Sutro Group is a volunteer-driven initiative of veteran AI researchers, hard
 - Seth Stafford: A recovering mathematician (PhD from Cornell, 1991) and early Oracle employee. He applies AI to healthcare and is highly active in the group's technical execution, running Claude Code agents to test hypotheses and verify the group's Python experiments.
 - Uliana Popov: Handled the meeting's logistics and ordered the pizza. She is connected to the group through the local Russian community.
 - Eric Frank: Left early.
-- Ritankar Das: A successful billionaire entrepreneur with an exit in biomedical advanced research. Left early.
+- Ritankar Das: An entrepreneur with a background in biomedical research. Left early.
 - Isaac Rehg: Works in the hardware space, currently with a stealth AI startup building specialized inference chips.
 - Andy Zhang.
 - Joshua Marks and Daria Soboleva (Cerebras) were absent. Remote asynchronous contributors Emmett Bicker and Germain Brion were heavily featured.
@@ -47,14 +47,14 @@ The Sutro Group is a volunteer-driven initiative of veteran AI researchers, hard
 3. Existing results overview. The group reviewed recent rapid prototyping wins:
 
 - Germain Brion: Despite a non-technical sales background, Germain used Claude to test truncated backpropagation. By dropping backward passes in early layers, he reduced energy costs by 19 percent and improved intelligence-per-joule by 27 percent without hurting validation loss.
-- Emmett Bicker: Used an autonomous agentic loop named Esther to reduce the memory footprint of MicroGPT from 80MB to 35MB.
+- Emmett Bicker: Used an autonomous agentic loop named Aster to reduce the memory footprint of MicroGPT from 80MB to 35MB.
 - Andy Zhang: Used GLM-5 to optimize a 3-character prediction task, dropping energy use drastically, though the model cheated by finding a degenerate shortcut and memorizing n-grams.
 
-4. Lessons, iteration is too hard. Despite these wins, Yaroslav highlighted a critical roadblock: the MicroGPT benchmark takes 3 minutes to train. For an AI agent to invent novel mathematical paradigms, it needs to iterate thousands of times. The group feels it is missing a small task it can rapidly iterate on, a simple Drosophila (fruit fly) of learning that could take one second to train.
+4. Lessons, iteration is too hard. Despite these wins, Yaroslav pointed to a serious roadblock: the MicroGPT benchmark takes 3 minutes to train. For an AI agent to invent novel mathematical paradigms, it needs to iterate thousands of times. The group feels it is missing a small task it can rapidly iterate on, a simple Drosophila (fruit fly) of learning that could take one second to train.
 
 5. Pebbling games. To bridge the gap between theoretical math and hardware realities, Yaroslav introduced the pebbling game from compiler theory. On an H100 GPU, doing math is virtually free (0.3 picojoules), accessing local registers is cheap (5 picojoules), but moving data from global HBM memory is massively expensive (500-plus picojoules). Backpropagation is inefficient because it requires storing activations across layers in HBM. Yaroslav proposed framing ML training as a scheduling game where AI agents must treat data as pebbles and are heavily penalized for using expensive HBM pebbles.
 
-Socializing and discussion. The meeting transitioned into pizza and a discussion on project funding. Yaroslav expressed anxiety about taking Ritankar's 500M dollar VC pitch, noting that VCs force startups to optimize for standard SaaS metrics (building faster horses) rather than paradigm shifts (burning down the forest). Michael Keating advised targeting sovereign wealth funds or mission-driven family offices, which have 10 to 20 year time horizons and do not require extractive VC exits.
+Socializing and discussion. The meeting transitioned into pizza and a discussion on project funding. Yaroslav was wary of taking large VC money, noting that VCs push startups to optimize for standard SaaS metrics (building faster horses) rather than the kind of fundamental change the group is after (burning down the forest). Michael Keating advised targeting sovereign wealth funds or mission-driven family offices, which have 10 to 20 year time horizons and do not require extractive VC exits.
 
 ## Streams of work and current status
 
@@ -72,6 +72,6 @@ To achieve the goal of instantly generating custom learning ecosystems for any h
 
 2. Joint optimization via the pebbling game. Agents are currently confused about whether they are optimizing a memory schedule or writing new math. Suggestion: hardcode the red-blue pebble game constraints directly into a custom evaluation loop (registers equal 1 cost point, HBM equals 100 cost points). Prompt the agent to avoid PyTorch autograd and invent a localized message-passing algorithm that solves the 1-second Drosophila task while keeping all data inside registers. This forces the model to organically invent biology-like, localized update rules.
 
-3. Standardize the hardware-agnostic sandbox. Combine Emmett's agentic loop with Andy's CodeCarbon profiling into a standardized API. The pipeline should take three inputs: a target hardware profile (latency and energy per memory tier), the 1-second Drosophila task, and an accuracy threshold. Once the agent can output an energy-efficient algorithm for an Nvidia H100 profile, that exact pipeline can be pointed at an AMD or Taalas chip.
+3. Standardize the hardware-agnostic sandbox. Combine Emmett's agentic loop with Andy's CodeCarbon profiling into a standardized API. The pipeline should take a target hardware profile (latency and energy per memory tier) along with the 1-second Drosophila task and an accuracy threshold. Once the agent can output an energy-efficient algorithm for an Nvidia H100 profile, that exact pipeline can be pointed at an AMD or Taalas chip.
 
 4. Secure patient capital. Following Michael Keating's advice, position Sutro as an energy and climate AI initiative. Pitching to family offices or climate funds focused on reducing AI's gigawatt-hour footprint will yield patient capital that supports a blank slate open-source vision, avoiding pressure to conform to the Nvidia and VC status quo.

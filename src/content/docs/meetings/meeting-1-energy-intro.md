@@ -14,7 +14,7 @@ Source: [energy-efficient learning slides](https://docs.google.com/document/d/1P
 - OpenAI: worked on gradient checkpointing.
 - Independent: beat Google in the 2018 DawnBench competition (fastest ImageNet training) by optimizing infrastructure on AWS, achieving 10-second iteration cycles versus Google's 10 minutes.
 - Meta (2023): implemented symbolic differentiation in a single Colab cell.
-- Philosophy: wants to "satisfice" (do just enough) rather than maximize. Tracks his "integrated lifetime pleasure" using audio logs of his emotional state.
+- Philosophy: wants to "satisfice" (do just enough) rather than maximize, framing the goal as his "integrated lifetime pleasure" over time.
 - Current goal: AI training was invented for CPUs, so find a more GPU-first way to train LLMs.
 
 ### Jackjack Ganbold
@@ -37,8 +37,8 @@ Source: [energy-efficient learning slides](https://docs.google.com/document/d/1P
 - Connection to Yaroslav: OpenAI researcher community.
 - Worked on Project Turquoise, Google's internal custom silicon team.
 - Survived "13 reorgs" at Google.
-- Colleagues spun out to form Groq, MatX, and Positron.
-- Role: the "Realist." Argues that energy inefficiency is a hardware orchestration problem, not just algorithmic.
+- Colleagues spun out to form Groq, MatX, and Positron, among other chip startups.
+- Role: the "Realist." Argues that energy inefficiency is a hardware orchestration problem rather than only an algorithmic one.
 
 ### Seth Stafford
 
@@ -85,8 +85,8 @@ Yaroslav argues backpropagation is like the Recurrent Laryngeal Nerve in giraffe
 ### The "Nerd Snipe"
 
 - Proposal to launch a competition: "Train a model on a smartphone via WebGPU using the minimum energy (Joules)."
-- WebGPU is chosen because it exposes the memory hierarchy (registers, shared, global), forcing developers to optimize data movement manually.
+- WebGPU is chosen because it exposes the memory hierarchy, from registers up through shared and global memory, forcing developers to optimize data movement manually.
 
 ### Infrastructure over Intelligence
 
-Yaroslav claimed he beat Google in 2018 not because he was smarter, but because he spent 3 months optimizing AWS infrastructure to restart runs in 10 seconds, while Google engineers waited 10+ minutes.
+Yaroslav claimed he beat Google in 2018 through infrastructure, not raw cleverness. He spent 3 months optimizing AWS to restart runs in 10 seconds, while Google engineers waited 10+ minutes.

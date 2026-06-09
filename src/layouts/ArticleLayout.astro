@@ -10,12 +10,12 @@ const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
-<Layout title={`${title} — Sutro Almanac`}>
+<Layout title={`${title} · Sutro Almanac`}>
   <article class="sy-article">
     <div class="bg"></div>
     <header class="head">
       <div class="u-container">
-        <a class="back" href={base}>← Sutro Almanac</a>
+        <a class="back" href={base}>Back to Sutro Almanac</a>
         <h1 class="u-heading title" data-sy-reveal="words">{title}</h1>
         {
           description ? (

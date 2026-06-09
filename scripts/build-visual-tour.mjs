@@ -40,6 +40,14 @@ const cleanInline = (s) =>
     .replace(/`([^`]*)`/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/\*([^*]+)\*/g, "$1")
+    // De-slop: year ranges keep a hyphen, arrows become "to", any remaining
+    // em/en-dash becomes a comma. The catalog sources lean on all three.
+    .replace(/(\d)\s*[–—]\s*(\d)/g, "$1-$2")
+    .replace(/\s*[→⇒]\s*/g, " to ")
+    .replace(/\s*←\s*/g, " from ")
+    .replace(/\s*[—–―]\s*/g, ", ")
+    .replace(/…/g, "...")
+    .replace(/\s+,/g, ",")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -50,7 +58,7 @@ function firstSentences(paragraph, max = 250) {
   const stop = Math.max(slice.lastIndexOf(". "), slice.lastIndexOf("; "));
   if (stop > 90) return slice.slice(0, stop + 1);
   const space = slice.lastIndexOf(" ");
-  return (space > 90 ? slice.slice(0, space) : slice).trim() + "…";
+  return (space > 90 ? slice.slice(0, space) : slice).trim().replace(/[,;:]$/, "") + ".";
 }
 
 const isYearHeading = (t) => /\b(?:19|20)\d{2}\b/.test(t) || /\b\d{3}0s\b/.test(t);

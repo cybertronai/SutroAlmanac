@@ -41,6 +41,9 @@ export default defineConfig({
     service: passthroughImageService(),
   },
   markdown: {
+    // Keep ASCII punctuation as-is. Without this, "--"/"---" become en/em-dashes
+    // and "..." becomes an ellipsis char in the built HTML.
+    smartypants: false,
     rehypePlugins: [rehypeBaseLinks],
   },
   experimental: {

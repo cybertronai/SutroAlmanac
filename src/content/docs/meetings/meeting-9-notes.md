@@ -1,6 +1,6 @@
 ---
 title: "Meeting 9 Notes"
-description: "Sutro Group meeting 9 on 16 Mar 2026, keeping the sparse parity problem while switching to the DMD metric."
+description: "Sutro Group meeting 9 on 16 Mar 2026, keeping the sparse parity problem while switching to the DMC metric."
 ---
 
 Source: [Google Doc](https://docs.google.com/document/d/1xD6sQbG6TnGifKWUbshcN2Yd1MSF_q3O7aEnI6p-JFE/edit?tab=t.0) (Meeting 9, 16 Mar 2026)
@@ -9,7 +9,7 @@ Working references: [Gemini](https://gemini.google.com/app/cfe6c99d4f46e713), [D
 
 ## TLDR
 
-- Keeping the same problem (sparse parity), but now relying on the DMD metric.
+- Keeping the same problem (sparse parity), but now relying on the DMC metric.
 
 AI slides: [Sutro Efficiency Synthesis (PDF)](https://drive.google.com/file/d/1GS0zeBfNhyW7Qv76ItbFD1pKLfja7zWm/view)
 
