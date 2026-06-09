@@ -1,0 +1,159 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeroHome from "../components/HeroHome.astro";
+import TextMarquee from "../components/TextMarquee.astro";
+import GalleryText from "../components/GalleryText.astro";
+import Faqs from "../components/Faqs.astro";
+import StepsTimeline from "../components/StepsTimeline.astro";
+import Statements from "../components/Statements.astro";
+import Introducing from "../components/Introducing.astro";
+import GL from "../components/GL.astro";
+import GLPlaces from "../components/GlPlaces.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<Layout title="Sutro Almanac">
+  <HeroHome
+    title="Energy-efficient AI, in the open."
+    subtitle="The running record of the Sutro Group, and what is worth reusing from it. Every challenge, recap, and finding traces back to its source."
+    cta={{
+      title: "Read the timeline",
+      url: `${base}timeline`,
+    }}
+  />
+
+  <Introducing
+    title="A study group turning the energy cost of AI into a research problem"
+    text="The Sutro Group meets every Monday at South Park Commons. The thesis is simple: on modern hardware, arithmetic is effectively free and data movement is the real energy cost. So the question worth chasing is how much better than gradient descent you can do by exploiting a problem's structure. The shared metric is ByteDMD, byte-granularity data movement."
+    cta={{
+      title: "See the projects",
+      url: `${base}projects`,
+    }}
+  />
+
+  <StepsTimeline
+    title="How Sutro works"
+    items={[
+      {
+        title: "Pick a problem you can run in seconds",
+        text: "Small, reproducible challenges like sparse parity, fast enough to iterate on in tight agent loops instead of waiting minutes for every run.",
+      },
+      {
+        title: "Run agent swarms against a locked metric",
+        text: "Blind parallel dispatch, one shared memory file every agent reads first, and a harness agents cannot edit, so results stay comparable and the metric cannot be gamed.",
+      },
+      {
+        title: "Score what the hardware pays for",
+        text: "Measure data movement with ByteDMD instead of raw accuracy, then chase the distance to the energy floor.",
+      },
+    ]}
+  />
+
+  <GalleryText
+    title="Four challenges, one question"
+    text="Each challenge is a small problem with its own leaderboard: sparse parity, energy-efficient matmul, sparse parity on the Dally grid, and language modeling on WikiText-103. They all ask the same thing. How few Joules can solve it?"
+    cta={{
+      title: "Read the recaps",
+      url: `${base}recaps/2026-06`,
+    }}
+    images={[
+      {
+        alt: "Sparse parity, a low-poly XOR network",
+        src: `${base}challenge-parity.jpg`,
+        width: 2048,
+        height: 2048,
+      },
+      {
+        alt: "Energy-efficient matmul, lit cells and data-movement paths on a grid",
+        src: `${base}challenge-matmul.jpg`,
+        width: 2048,
+        height: 2048,
+      },
+      {
+        alt: "Sparse parity on the grid, a gradient path through a Manhattan grid",
+        src: `${base}challenge-grid.jpg`,
+        width: 2048,
+        height: 2048,
+      },
+      {
+        alt: "WikiText, a low-energy stream of tokens",
+        src: `${base}challenge-wikitext.jpg`,
+        width: 2048,
+        height: 2048,
+      },
+    ]}
+    marqueeTexts={[
+      "Sparse parity",
+      "Energy-efficient matmul",
+      "Sparse parity on the grid",
+      "WikiText-103",
+    ]}
+  />
+
+  <Statements
+    items={[
+      {
+        title: "Every claim links to a source",
+        text: "The recaps are built from the Telegram archive, the changelog, and the catch-ups, with each claim traceable. No prose written from memory.",
+      },
+      {
+        title: "Exact methods beat gradient descent",
+        text: "On sparse parity, GF(2) elimination solves the task about 1000x faster than SGD, because parity is linear over GF(2).",
+      },
+      {
+        title: "Negative results are first-class",
+        text: "Methods that do not work get published as clean findings, not buried.",
+      },
+    ]}
+  />
+
+  <TextMarquee
+    class="marquee"
+    texts={[
+      "Intelligence per joule",
+      "Sparse parity",
+      "ByteDMD",
+      "Auto-research loops",
+      "Wave-build",
+    ]}
+  />
+
+  <Faqs
+    title="Frequently Asked Questions"
+    mobileTitle="FAQs"
+    subtitle="Quick answers about the group and the Almanac."
+    items={[
+      {
+        question: "What is the Sutro Group?",
+        answer:
+          "A study group on energy-efficient AI training, meeting weekly at South Park Commons in San Francisco, led by Yaroslav Bulatov and run by Yad Konrad.",
+      },
+      {
+        question: "What is ByteDMD?",
+        answer:
+          "The primary cost metric: byte-granularity data movement, measured in pure Python so agents cannot hide work behind numpy.",
+      },
+      {
+        question: "How is the Almanac sourced?",
+        answer:
+          "Each monthly recap is written from the sources directly, the SutroYaro changelog, the catch-ups, and the Telegram archive, with every claim traceable.",
+      },
+      {
+        question: "Where is the code?",
+        answer:
+          "Across the cybertronai repos: SutroYaro is the hub, alongside the challenge repos and the hinton and schmidhuber paper-implementation catalogs.",
+      },
+    ]}
+  />
+
+  <GL />
+  <GLPlaces />
+</Layout>
+
+<style>
+  .marquee {
+    padding: 2rem 0;
+    z-index: 9;
+  }
+</style>

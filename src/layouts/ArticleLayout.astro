@@ -1,0 +1,169 @@
+---
+import Layout from "./Layout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<Layout title={`${title} — Sutro Almanac`}>
+  <article class="sy-article">
+    <div class="bg"></div>
+    <header class="head">
+      <div class="u-container">
+        <a class="back" href={base}>← Sutro Almanac</a>
+        <h1 class="u-heading title" data-sy-reveal="words">{title}</h1>
+        {
+          description ? (
+            <p class="u-text desc" data-sy-reveal="lines">
+              {description}
+            </p>
+          ) : null
+        }
+      </div>
+    </header>
+    <div class="u-container">
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .sy-article {
+    position: relative;
+    z-index: 1;
+    padding: 9rem 0 8rem;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 32rem;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(236, 231, 253, 0.55) 0%,
+        rgba(255, 237, 220, 0.25) 45%,
+        transparent 100%
+      ),
+      radial-gradient(60% 80% at 88% 0%, rgba(255, 79, 163, 0.16), transparent 60%),
+      radial-gradient(50% 80% at -5% 0%, rgba(141, 115, 245, 0.16), transparent 60%);
+    mask: linear-gradient(180deg, #000 60%, transparent 100%);
+  }
+
+  .head {
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .back {
+    @extend %u-text;
+    --fs: var(--font-size-sm);
+    color: var(--color-brand-1);
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .title {
+    --fs: 3.25rem;
+    --lh: 1;
+    max-width: 16em;
+  }
+
+  .desc {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+    max-width: 42em;
+    margin-top: 1.25rem;
+  }
+
+  .prose {
+    max-width: 46rem;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-roboto-slab);
+    font-size: 1.85rem;
+    letter-spacing: -0.015em;
+    margin: 2.75rem 0 1rem;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-roboto-slab);
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .prose :global(p),
+  .prose :global(li) {
+    line-height: 1.65;
+    color: var(--color-text);
+  }
+
+  .prose :global(p) {
+    margin: 1rem 0;
+  }
+
+  .prose :global(a) {
+    color: var(--color-brand-1);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.25rem;
+  }
+
+  .prose :global(li) {
+    margin: 0.4rem 0;
+  }
+
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: var(--font-size-sm);
+  }
+
+  .prose :global(th),
+  .prose :global(td) {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--color-brand-3);
+    vertical-align: top;
+  }
+
+  .prose :global(th) {
+    font-weight: 600;
+  }
+
+  .prose :global(code) {
+    background: var(--color-brand-3);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-brand-3);
+    margin: 2.5rem 0;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--color-brand-1);
+    padding-left: 1rem;
+    color: var(--color-text-alt);
+    margin: 1rem 0;
+  }
+</style>

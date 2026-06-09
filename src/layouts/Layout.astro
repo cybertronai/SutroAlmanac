@@ -1,0 +1,72 @@
+---
+import { Font } from "astro:assets";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SmoothScroll from "../components/SmoothScroll.astro";
+import { useTranslations } from "../i18n/utils";
+import "../styles/global.css";
+
+const { title } = Astro.props;
+const t = useTranslations();
+// BASE_URL is "/SutroAlmanac" (no trailing slash) in the Pages build and "/" in
+// dev; normalize to a single trailing slash so `${base}path` joins cleanly.
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const links = [
+  { title: "Timeline", url: `${base}timeline` },
+  { title: "Recaps", url: `${base}recaps` },
+  { title: "Challenges", url: `${base}challenges` },
+  { title: "Visual tour", url: `${base}visual-tour` },
+  { title: "Projects", url: `${base}projects` },
+  { title: "Repos", url: `${base}repos` },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Font cssVariable="--font-roboto-slab" preload />
+    <Font cssVariable="--font-inter" preload />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{t("accessibility.skip-to-content")}</a>
+    <Header
+      logoUrl={base}
+      logoAlt="Sutro Almanac"
+      links={links}
+      link1={{ title: "GitHub", url: "https://github.com/cybertronai/SutroYaro" }}
+      link2={{ title: "Insights", url: `${base}insights` }}
+    />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer logoUrl={base} logoAlt="Sutro Almanac" links={links} />
+    <SmoothScroll />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    background: var(--color-brand-1);
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: min-content;
+    white-space: nowrap;
+    padding: 0.5rem;
+    position: absolute;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0%);
+  }
+</style>
+
+<script>
+  import "../utils/reveals";
+</script>

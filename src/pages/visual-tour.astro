@@ -1,0 +1,197 @@
+---
+import Layout from "../layouts/Layout.astro";
+import tour from "../data/visual-tour.json";
+
+const total = tour.totals.hinton + tour.totals.schmidhuber;
+---
+
+<Layout title="Visual tour — Sutro Almanac">
+  <article class="sy-tour">
+    <div class="bg"></div>
+    <header class="head">
+      <div class="u-container">
+        <h1 class="u-heading title" data-sy-reveal="words">Visual tour</h1>
+        <p class="u-text desc" data-sy-reveal="lines">
+          Yad's wave-build swarms reproduced two catalogs of papers as runnable
+          stubs, each one committing a training animation. All {total} are below in
+          catalog order, every card tracing back to a paper and a folder of code.
+          The GIFs stream from each catalog's own pages.
+        </p>
+      </div>
+    </header>
+
+    <div class="u-container">
+      {
+        tour.catalogs.map((cat) => (
+          <section class="cat">
+            <h2 class="u-heading cat-name">
+              {cat.label}
+              <span class="count">{cat.count}</span>
+              <a class="more" href={cat.tourUrl}>source tour</a>
+            </h2>
+            <p class="cat-blurb">{cat.blurb}</p>
+
+            {cat.eras.map((era) => (
+              <>
+                <h3 class="era">{era.name}</h3>
+                <div class="grid">
+                  {era.items.map((s) => (
+                    <figure class="card">
+                      <img src={s.gif} alt={s.title} loading="lazy" decoding="async" />
+                      <figcaption>
+                        <strong>
+                          {s.star ? <span class="star">★</span> : null}
+                          {s.title}
+                        </strong>
+                        <span class="paper">{s.paper}</span>
+                        {s.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </>
+            ))}
+          </section>
+        ))
+      }
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .sy-tour {
+    position: relative;
+    z-index: 1;
+    padding: 9rem 0 8rem;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 30rem;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(236, 231, 253, 0.5) 0%, rgba(255, 237, 220, 0.22) 45%, transparent 100%),
+      radial-gradient(60% 80% at 88% 0%, rgba(255, 79, 163, 0.16), transparent 60%),
+      radial-gradient(50% 80% at -5% 0%, rgba(141, 115, 245, 0.16), transparent 60%);
+    mask: linear-gradient(180deg, #000 60%, transparent 100%);
+  }
+
+  .head {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    --fs: 3.25rem;
+    --lh: 1;
+  }
+
+  .desc {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+    max-width: 44em;
+    margin-top: 1.25rem;
+  }
+
+  .cat {
+    margin-top: 4.5rem;
+  }
+
+  .cat-name {
+    --fs: 1.9rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .count {
+    font: 500 var(--font-size-sm) / 1 var(--font-inter);
+    color: var(--color-text-alt);
+    border: 1px solid var(--color-border, rgba(11, 31, 91, 0.16));
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+  }
+
+  .more {
+    font: 500 var(--font-size-sm) / 1 var(--font-inter);
+    color: var(--color-brand-1);
+  }
+
+  .cat-blurb {
+    font: 400 var(--font-size-base) / 1.5 var(--font-inter);
+    color: var(--color-text-alt);
+    margin: 0.6rem 0 0;
+  }
+
+  .era {
+    --fs: 1.15rem;
+    font-family: var(--font-roboto-slab);
+    color: var(--color-text);
+    margin: 2.75rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(11, 31, 91, 0.1);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+
+    @media (--mq-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (--mq-phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card {
+    margin: 0;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 24px 60px -36px rgba(11, 31, 91, 0.35);
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    background: var(--color-bg);
+  }
+
+  .card figcaption {
+    padding: 0.9rem 1.1rem 1.2rem;
+    font: 400 var(--font-size-sm) / 1.45 var(--font-inter);
+    color: var(--color-text);
+  }
+
+  .card figcaption strong {
+    display: block;
+    font-family: var(--font-roboto-slab);
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.15rem;
+  }
+
+  .star {
+    color: var(--color-brand-1);
+    margin-right: 0.3rem;
+  }
+
+  .paper {
+    display: block;
+    font-size: var(--font-size-xs, 0.78rem);
+    color: var(--color-text-alt);
+    margin-bottom: 0.5rem;
+  }
+</style>

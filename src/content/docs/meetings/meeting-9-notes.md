@@ -1,0 +1,26 @@
+---
+title: "Meeting 9 Notes"
+description: "Sutro Group meeting 9 on 16 Mar 2026, keeping the sparse parity problem while switching to the DMD metric."
+---
+
+Source: [Google Doc](https://docs.google.com/document/d/1xD6sQbG6TnGifKWUbshcN2Yd1MSF_q3O7aEnI6p-JFE/edit?tab=t.0) (Meeting 9, 16 Mar 2026)
+
+Working references: [Gemini](https://gemini.google.com/app/cfe6c99d4f46e713), [DeepThink](https://gemini.google.com/app/9f76a94da7930fe9), [ChatGPT](https://chatgpt.com/c/69b95478-9554-8323-8b1c-37d2ca9031e8), [NotebookLM](https://notebooklm.google.com/notebook/e3bea86f-6323-4676-baad-53a0c83dc0c2)
+
+## TLDR
+
+- Keeping the same problem (sparse parity), but now relying on the DMD metric.
+
+AI slides: [Sutro Efficiency Synthesis (PDF)](https://drive.google.com/file/d/1GS0zeBfNhyW7Qv76ItbFD1pKLfja7zWm/view)
+
+## Participants
+
+- Yaroslav Bulatov (host): leading the Sutro Group.
+- Moorissa Tjokro: SPC member. Indonesian background. Robotics engineer who previously worked on autonomous vehicles at Tesla and Cruise and built AI for emergency responders. Brought the dumplings and honey cake.
+- Anastasiia Zhiboedova: SPC member and ML Engineer at Amazon AGI.
+- Michael Keating: works for a company that sells cooling technology to data centers. Attending the NVIDIA GTC conference.
+- Jonathan Belay: participant whose mother is Russian and who spent a semester in Indonesia.
+- Yad Konrad (Yat / Yad K): former SPC member (2019) who participated asynchronously via a pre-recorded video demonstrating his automated AI researcher.
+- JackJack Ganbold: SPC member.
+- Andrew
+- Preston Schmittou
