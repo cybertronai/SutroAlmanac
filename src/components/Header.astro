@@ -5,12 +5,13 @@ import type { Link } from "../types";
 interface Props {
   logoUrl: string;
   logoAlt: string;
-  links: Link[];
+  links: (Link & { active?: boolean })[];
+  link0?: Link;
   link1?: Link;
   link2?: Link;
 }
 
-const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
+const { logoUrl, logoAlt, link0, link1, link2, links } = Astro.props;
 ---
 
 <header>
@@ -26,7 +27,9 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
             {
               links.map((l) => (
                 <li>
-                  <a href={l.url}>{l.title}</a>
+                  <a href={l.url} aria-current={l.active ? "page" : undefined}>
+                    {l.title}
+                  </a>
                 </li>
               ))
             }
@@ -34,6 +37,13 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
         </div>
 
         <div class="buttons">
+          {
+            link0 ? (
+              <a class="login" href={link0.url}>
+                {link0.title}
+              </a>
+            ) : null
+          }
           {
             link1 ? (
               <a class="login" href={link1.url}>
@@ -246,6 +256,11 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
             transform: scaleX(1);
             transform-origin: left;
           }
+        }
+
+        &[aria-current="page"]::before {
+          transform: scaleX(1);
+          transform-origin: left;
         }
       }
     }

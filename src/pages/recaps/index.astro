@@ -1,0 +1,112 @@
+---
+// The recaps hub is generated from the content collection so a new recap can
+// never be orphaned: drop the file in, it appears here.
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const docs = await getCollection("docs");
+
+const monthlies = docs
+  .filter((d) => /^recaps\/\d{4}-\d{2}$/.test(d.id))
+  .sort((a, b) => b.id.localeCompare(a.id));
+const weeklies = docs
+  .filter((d) => /^recaps\/weekly\/\d{4}-\d{2}-\d{2}$/.test(d.id))
+  .sort((a, b) => a.id.localeCompare(b.id));
+const catchups = docs
+  .filter((d) => /^catchups\//.test(d.id))
+  .sort((a, b) => a.id.localeCompare(b.id));
+
+const monthLabel = (ym: string) =>
+  new Date(ym + "-15T12:00:00Z").toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+const dayLabel = (ymd: string) =>
+  new Date(ymd + "T12:00:00Z").toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+
+const weekGroups: { ym: string; label: string; weeks: { url: string; label: string }[] }[] = [];
+for (const w of weeklies) {
+  const date = w.id.split("/").pop()!;
+  const ym = date.slice(0, 7);
+  let g = weekGroups.find((g) => g.ym === ym);
+  if (!g) {
+    g = { ym, label: monthLabel(ym), weeks: [] };
+    weekGroups.push(g);
+  }
+  g.weeks.push({ url: base + w.id, label: dayLabel(date) });
+}
+---
+
+<ArticleLayout
+  title="Recaps"
+  description="The periodic record of the Sutro Group: monthly recaps, weekly recaps, and the original catch-ups."
+>
+  <p>
+    Recaps are the periodic layer of the Almanac. Each one snapshots where the work
+    stands at a point in time: what moved, what is active, what is worth reusing.
+    The <a href={`${base}timeline`}>Timeline</a> absorbs them into the long record,
+    and the <a href={`${base}archive`}>Archive</a> lays the whole record out on one
+    page.
+  </p>
+  <p>
+    There are three layers below, from coarse to fine. The monthly recaps are the
+    primary record, written from the sources directly. The weekly recaps zoom in on
+    a single week. The catch-ups are the original status notes the months were
+    built from. Source material is the group's Telegram archive, the shared Google
+    Docs, the <a href={`${base}meetings`}>meeting notes</a>, and the repos, with
+    each claim traceable.
+  </p>
+
+  <h2>Monthly</h2>
+  <p>The primary record, newest first.</p>
+  <ul>
+    {
+      monthlies.map((m) => (
+        <li>
+          <a href={base + m.id}>{m.data.title}</a>
+          {m.data.description ? <>: {m.data.description}</> : null}
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Weekly</h2>
+  <p>{weeklies.length} weeks, bucketed from the archive by Monday-week.</p>
+  {
+    weekGroups.map((g) => (
+      <p>
+        <strong>{g.label}</strong>
+        <br />
+        {g.weeks.map((w, i) => (
+          <>
+            {i > 0 ? " · " : null}
+            <a href={w.url}>{w.label}</a>
+          </>
+        ))}
+      </p>
+    ))
+  }
+
+  <h2>Catch-ups</h2>
+  <p>The original status notes from the SutroYaro docs, kept verbatim.</p>
+  <ul>
+    {
+      catchups.map((c) => (
+        <li>
+          <a href={base + c.id}>{c.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p>
+    The meeting notes are a separate strand. See
+    <a href={`${base}meetings`}>Meeting notes</a>, the dated
+    <a href={`${base}decisions`}>decisions log</a>, and the current
+    <a href={`${base}records`}>records</a>.
+  </p>
+</ArticleLayout>

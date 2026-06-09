@@ -1,21 +1,46 @@
 ---
 import Layout from "./Layout.astro";
 
+interface Entry {
+  url: string; // root-absolute, without base
+  title: string;
+}
+
 interface Props {
   title: string;
   description?: string;
+  id?: string; // content id, e.g. "recaps/weekly/2026-06-01"
+  pager?: { prev: Entry | null; next: Entry | null } | null;
+  related?: { label: string; items: Entry[] } | null;
+  stats?: { msgs: number; links: number } | null;
+  toc?: { slug: string; text: string }[];
 }
 
-const { title, description } = Astro.props;
+const { title, description, id, pager, related, stats, toc } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const href = (e: Entry) => base + e.url.replace(/^\//, "");
+
+// Context-aware back-link: hub of the section this page belongs to.
+function backFor(docId?: string) {
+  if (docId && !docId.endsWith("/index")) {
+    if (docId.startsWith("recaps/") || docId.startsWith("catchups/"))
+      return { href: `${base}recaps`, label: "Back to recaps" };
+    if (docId.startsWith("meetings/"))
+      return { href: `${base}meetings`, label: "Back to meeting notes" };
+    if (docId.startsWith("challenges/"))
+      return { href: `${base}challenges`, label: "Back to challenges" };
+  }
+  return { href: base, label: "Back to Sutro Almanac" };
+}
+const back = backFor(id);
 ---
 
-<Layout title={`${title} · Sutro Almanac`}>
+<Layout title={`${title} · Sutro Almanac`} description={description}>
   <article class="sy-article">
     <div class="bg"></div>
     <header class="head">
       <div class="u-container">
-        <a class="back" href={base}>Back to Sutro Almanac</a>
+        <a class="back" href={back.href}>{back.label}</a>
         <h1 class="u-heading title" data-sy-reveal="words">{title}</h1>
         {
           description ? (
@@ -24,12 +49,65 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             </p>
           ) : null
         }
+        {
+          stats ? (
+            <p class="stats">
+              {stats.msgs} messages and {stats.links} links in the archive this week.
+            </p>
+          ) : null
+        }
+        {
+          toc && toc.length > 1 ? (
+            <nav class="toc" aria-label="On this page">
+              <span>On this page:</span>
+              {toc.map((h) => (
+                <a href={`#${h.slug}`}>{h.text}</a>
+              ))}
+            </nav>
+          ) : null
+        }
       </div>
     </header>
     <div class="u-container">
       <div class="prose">
         <slot />
       </div>
+
+      {
+        related || pager ? (
+          <footer class="continue">
+            {related && related.items.length ? (
+              <p class="rel">
+                <span class="rel-label">{related.label}:</span>
+                {related.items.map((it, i) => (
+                  <>
+                    {i > 0 ? <span class="sep">·</span> : null}
+                    <a href={href(it)}>{it.title}</a>
+                  </>
+                ))}
+              </p>
+            ) : null}
+            {pager && (pager.prev || pager.next) ? (
+              <nav class="pager" aria-label="Chronological">
+                {pager.prev ? (
+                  <a class="pg prev" href={href(pager.prev)}>
+                    <span>Previous</span>
+                    <strong>{pager.prev.title}</strong>
+                  </a>
+                ) : (
+                  <span />
+                )}
+                {pager.next ? (
+                  <a class="pg next" href={href(pager.next)}>
+                    <span>Next</span>
+                    <strong>{pager.next.title}</strong>
+                  </a>
+                ) : null}
+              </nav>
+            ) : null}
+          </footer>
+        ) : null
+      }
     </div>
   </article>
 </Layout>
@@ -83,6 +161,35 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     color: var(--color-text-alt);
     max-width: 42em;
     margin-top: 1.25rem;
+  }
+
+  .stats {
+    font: 500 var(--font-size-sm) / 1.4 var(--font-inter);
+    color: var(--color-text-alt);
+    margin-top: 0.9rem;
+  }
+
+  .toc {
+    margin-top: 1.4rem;
+    font: 400 var(--font-size-sm) / 1.9 var(--font-inter);
+    color: var(--color-text-alt);
+    max-width: 46rem;
+  }
+
+  .toc span {
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+
+  .toc a {
+    color: var(--color-brand-1);
+    text-decoration: none;
+    margin-right: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
   }
 
   .prose {
@@ -165,5 +272,76 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     padding-left: 1rem;
     color: var(--color-text-alt);
     margin: 1rem 0;
+  }
+
+  .continue {
+    max-width: 46rem;
+    margin-top: 3.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-brand-3);
+  }
+
+  .rel {
+    font: 400 var(--font-size-sm) / 1.8 var(--font-inter);
+    color: var(--color-text-alt);
+    margin: 0 0 1.25rem;
+  }
+
+  .rel-label {
+    font-weight: 600;
+    margin-right: 0.4rem;
+  }
+
+  .rel a {
+    color: var(--color-brand-1);
+    text-decoration: none;
+  }
+
+  .rel a:hover {
+    text-decoration: underline;
+  }
+
+  .sep {
+    margin: 0 0.5rem;
+  }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .pg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 48%;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--color-brand-3);
+    border-radius: 0.9rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .pg:hover {
+    border-color: var(--color-brand-1);
+  }
+
+  .pg span {
+    font: 500 var(--font-size-xs, 0.78rem) / 1 var(--font-inter);
+    color: var(--color-text-alt);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .pg strong {
+    font-family: var(--font-roboto-slab);
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .pg.next {
+    margin-left: auto;
+    text-align: right;
   }
 </style>

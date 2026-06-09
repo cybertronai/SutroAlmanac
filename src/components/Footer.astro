@@ -5,9 +5,10 @@ interface Props {
   logoUrl: string;
   logoAlt: string;
   links: Link[];
+  note?: string;
 }
 
-const { logoUrl, logoAlt, links } = Astro.props;
+const { logoUrl, logoAlt, links, note } = Astro.props;
 ---
 
 <sy-footer>
@@ -31,6 +32,7 @@ const { logoUrl, logoAlt, links } = Astro.props;
         </div>
         <p class="cp">© {new Date().getFullYear()} {logoAlt}</p>
       </div>
+      {note ? <p class="note">{note}</p> : null}
     </div>
   </footer>
 </sy-footer>
@@ -122,6 +124,17 @@ const { logoUrl, logoAlt, links } = Astro.props;
     @media (--mq-tablet) {
       flex-direction: column;
     }
+  }
+
+  .menu ul {
+    max-width: 40rem;
+  }
+
+  .note {
+    margin: 1.25rem 0 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: var(--font-size-sm);
   }
 </style>
 

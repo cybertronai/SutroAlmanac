@@ -1,0 +1,133 @@
+---
+// The whole record on one page, generated from the collections so it maintains
+// itself: months with their weeks and catch-ups, then meetings, challenges, and
+// the reference pages.
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const docs = await getCollection("docs");
+const byId = new Map(docs.map((d) => [d.id, d]));
+
+const monthlies = docs
+  .filter((d) => /^recaps\/\d{4}-\d{2}$/.test(d.id))
+  .sort((a, b) => b.id.localeCompare(a.id));
+const weeklies = docs
+  .filter((d) => /^recaps\/weekly\/\d{4}-\d{2}-\d{2}$/.test(d.id))
+  .sort((a, b) => a.id.localeCompare(b.id));
+const catchups = docs.filter((d) => /^catchups\//.test(d.id)).sort((a, b) => a.id.localeCompare(b.id));
+const meetings = docs
+  .filter((d) => /^meetings\//.test(d.id) && !d.id.endsWith("/index"))
+  .sort((a, b) => a.id.localeCompare(b.id));
+const challenges = docs
+  .filter((d) => /^challenges\//.test(d.id) && !d.id.endsWith("/index"))
+  .sort((a, b) => a.id.localeCompare(b.id));
+
+const dayLabel = (ymd: string) =>
+  new Date(ymd + "T12:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
+const months = monthlies.map((m) => {
+  const ym = m.id.split("/").pop()!;
+  return {
+    url: base + m.id,
+    title: m.data.title,
+    description: m.data.description,
+    weeks: weeklies
+      .filter((w) => w.id.startsWith(`recaps/weekly/${ym}-`))
+      .map((w) => ({ url: base + w.id, label: dayLabel(w.id.split("/").pop()!) })),
+    catchups: catchups
+      .filter((c) => c.id.startsWith(`catchups/${ym}-`))
+      .map((c) => ({ url: base + c.id, label: dayLabel(c.id.split("/").pop()!) })),
+  };
+});
+
+const reference = [
+  ["timeline", "Timeline"],
+  ["projects", "Projects"],
+  ["insights", "Insights"],
+  ["repos", "Repos"],
+  ["decisions", "Decisions"],
+  ["records", "Records"],
+  ["glossary", "Glossary"],
+  ["visual-tour", "Visual tour"],
+]
+  .filter(([id]) => byId.has(id) || ["visual-tour"].includes(id))
+  .map(([id, title]) => ({ url: base + id, title }));
+---
+
+<ArticleLayout
+  title="Archive"
+  description="The whole record on one page: every month with its weeks and catch-ups, then the meetings, the challenges, and the reference pages."
+>
+  <p>
+    Newest first. For a specific fact, <a href={`${base}search`}>search</a> is
+    faster.
+  </p>
+
+  {
+    months.map((m) => (
+      <>
+        <h2>
+          <a href={m.url}>{m.title}</a>
+        </h2>
+        {m.description ? <p>{m.description}</p> : null}
+        {m.weeks.length ? (
+          <p>
+            <strong>Weeks:</strong>{" "}
+            {m.weeks.map((w, i) => (
+              <>
+                {i > 0 ? " · " : null}
+                <a href={w.url}>{w.label}</a>
+              </>
+            ))}
+            {m.catchups.length ? (
+              <>
+                {" "}
+                <strong>Catch-ups:</strong>{" "}
+                {m.catchups.map((c, i) => (
+                  <>
+                    {i > 0 ? " · " : null}
+                    <a href={c.url}>{c.label}</a>
+                  </>
+                ))}
+              </>
+            ) : null}
+          </p>
+        ) : null}
+      </>
+    ))
+  }
+
+  <h2>Meeting notes</h2>
+  <ul>
+    {
+      meetings.map((m) => (
+        <li>
+          <a href={base + m.id}>{m.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Challenges</h2>
+  <ul>
+    {
+      challenges.map((c) => (
+        <li>
+          <a href={base + c.id}>{c.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Reference</h2>
+  <ul>
+    {
+      reference.map((r) => (
+        <li>
+          <a href={r.url}>{r.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</ArticleLayout>

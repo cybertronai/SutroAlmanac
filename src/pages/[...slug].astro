@@ -1,19 +1,84 @@
 ---
 import { getCollection, render } from "astro:content";
 import ArticleLayout from "../layouts/ArticleLayout.astro";
+import weeklyStats from "../data/weekly-stats.json";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
-  return docs.map((doc) => ({
-    params: { slug: doc.id.replace(/\/index$/, "") || doc.id },
-    props: { doc },
-  }));
+  const byId = new Map(docs.map((d) => [d.id, d]));
+
+  // chronological series; each member gets a prev/next pager within its series
+  const series = {
+    weekly: docs
+      .filter((d) => /^recaps\/weekly\/\d{4}-\d{2}-\d{2}$/.test(d.id))
+      .map((d) => d.id)
+      .sort(),
+    monthly: docs
+      .filter((d) => /^recaps\/\d{4}-\d{2}$/.test(d.id))
+      .map((d) => d.id)
+      .sort(),
+    catchups: docs
+      .filter((d) => /^catchups\//.test(d.id))
+      .map((d) => d.id)
+      .sort(),
+    meetings: docs
+      .filter((d) => /^meetings\//.test(d.id) && !d.id.endsWith("/index"))
+      .map((d) => d.id)
+      .sort(),
+  };
+  const entry = (id) => ({ url: "/" + id, title: byId.get(id)?.data.title ?? id });
+
+  return docs.map((doc) => {
+    let pager = null;
+    let related = null;
+
+    for (const [name, ids] of Object.entries(series)) {
+      const i = ids.indexOf(doc.id);
+      if (i === -1) continue;
+      pager = {
+        prev: i > 0 ? entry(ids[i - 1]) : null,
+        next: i < ids.length - 1 ? entry(ids[i + 1]) : null,
+      };
+      if (name === "weekly") {
+        const month = doc.id.split("/").pop().slice(0, 7); // YYYY-MM
+        if (byId.has(`recaps/${month}`))
+          related = { label: "Monthly recap", items: [entry(`recaps/${month}`)] };
+      }
+      if (name === "monthly") {
+        const month = doc.id.split("/").pop(); // YYYY-MM
+        const weeks = series.weekly.filter((w) => w.startsWith(`recaps/weekly/${month}-`));
+        if (weeks.length) related = { label: "Weeks this month", items: weeks.map(entry) };
+      }
+      break;
+    }
+
+    const stats = /^recaps\/weekly\//.test(doc.id)
+      ? (weeklyStats[doc.id.split("/").pop()] ?? null)
+      : null;
+
+    return {
+      params: { slug: doc.id.replace(/\/index$/, "") || doc.id },
+      props: { doc, pager, related, stats },
+    };
+  });
 }
 
-const { doc } = Astro.props;
-const { Content } = await render(doc);
+const { doc, pager, related, stats } = Astro.props;
+const { Content, headings } = await render(doc);
+// inline table of contents for the long-form monthly recaps only
+const toc = /^recaps\/\d{4}-\d{2}$/.test(doc.id)
+  ? headings.filter((h) => h.depth === 2).map(({ slug, text }) => ({ slug, text }))
+  : [];
 ---
 
-<ArticleLayout title={doc.data.title} description={doc.data.description}>
+<ArticleLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  id={doc.id}
+  pager={pager}
+  related={related}
+  stats={stats}
+  toc={toc}
+>
   <Content />
 </ArticleLayout>

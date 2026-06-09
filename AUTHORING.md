@@ -58,11 +58,17 @@ is the route. The deployed site adds the `/SutroAlmanac` base on top.
 | Catch-up | `catchups/2026-05-20.md` | `/catchups/2026-05-20` |
 | Meeting | `meetings/meeting-9-notes.md` | `/meetings/meeting-9-notes` |
 | Challenge | `challenges/sparse-parity.md` | `/challenges/sparse-parity` |
-| Hub pages | `recaps/index.md`, `meetings/index.md`, `challenges/index.md` | `/recaps`, `/meetings`, `/challenges` |
+| Hub pages | `meetings/index.md`, `challenges/index.md` | `/meetings`, `/challenges` |
 | Core pages | `intro.md`, `timeline.md`, `projects.md`, `insights.md`, `repos.md` | `/intro`, and so on |
+| Reference pages | `decisions.md`, `records.md`, `glossary.md` | `/decisions`, `/records`, `/glossary` |
 
-Routing is automatic from the file id. The header and footer nav is the `links`
-array in `src/layouts/Layout.astro`; add a top-level page there to surface it.
+Routing is automatic from the file id. The header nav is the `nav` array in
+`src/layouts/Layout.astro`; the footer carries the full map. Three pages are
+generated from the collections and never edited by hand: the recaps hub
+(`src/pages/recaps/index.astro`), the archive (`src/pages/archive.astro`), and
+search (`src/pages/search.astro`). Drop a new recap file in and the hub, the
+archive, the RSS feed, the freshness stamp in the footer, and the landing-page
+CTA all pick it up at build time.
 
 ## Frontmatter
 
@@ -92,11 +98,19 @@ description: "Auto-research loops after the Modal hackathon, and the four challe
    Output lands in `digests/`, which is gitignored and holds private message
    text. Never publish it.
 
-2. Write the recap from the digest. Every claim should trace to a line in the
+2. For a weekly, scaffold the file and refresh the published counts:
+
+   ```bash
+   node scripts/new-week.mjs            # most recent Monday, or pass YYYY-MM-DD
+   node scripts/build-weekly-stats.mjs  # counts-only JSON shown under weekly titles
+   ```
+
+3. Write the recap from the digest. Every claim should trace to a line in the
    digest. No prose from memory. Keep the source links.
 
-3. End a monthly recap with a `## Sources` block (see [Sources](#sources)), then
-   link the new page from its hub (the checklist is at the end).
+4. End every recap, monthly and weekly, with a `## Sources` block (see
+   [Sources](#sources)). The hubs and archive update themselves; nothing to link
+   by hand.
 
 ## Writing standards
 
@@ -162,17 +176,12 @@ npm run dev                              # local, served at the root
 SUTRO_BASE=/SutroAlmanac npm run build   # production build under the base path
 ```
 
-Verify the built HTML carries no dashes or arrows before pushing:
-
-```bash
-python3 - <<'PY'
-import glob
-bad = set(chr(c) for c in (0x2014, 0x2013, 0x2015, 0x2192, 0x2190, 0x2194, 0x21d2, 0x2026))
-for f in glob.glob('dist/**/*.html', recursive=True):
-    hit = {c for c in bad if c in open(f, encoding='utf-8').read()}
-    if hit: print(f, hit)
-PY
-```
+`npm run build` chains three steps: `astro build`, the Pagefind index over
+`dist/`, and `scripts/check-style.mjs`. The checker fails the build if any built
+page carries an em-dash, en-dash, arrow, or ellipsis (raw or entity), or if any
+internal link does not resolve to a file in `dist/`. CI runs the same command,
+so a violation cannot deploy. The dev server has no search index; the search
+page says so until a production build runs.
 
 Push to `main`. GitHub Actions builds and deploys to
 https://cybertronai.github.io/SutroAlmanac/.
@@ -181,12 +190,12 @@ https://cybertronai.github.io/SutroAlmanac/.
 
 1. `SUTROYARO=../SutroYaro bun scripts/build-weekly-digest.ts` (and
    `build-digest.ts` too if the month rolled over).
-2. Add `src/content/docs/recaps/weekly/<Monday>.md` with frontmatter, written
-   from the digest.
-3. Link it in `recaps/index.md` under the right month.
+2. `node scripts/new-week.mjs` to scaffold the weekly, then
+   `node scripts/build-weekly-stats.mjs` to refresh the published counts.
+3. Write the recap from the digest, ending with its `## Sources` block.
 4. If a meeting happened, add `meetings/<slug>.md` and link it from
-   `meetings/index.md`.
-5. Update the current monthly recap, or start a new month file and add it to
-   `recaps/index.md`.
-6. Run the dash scan and `npm run build`.
+   `meetings/index.md` (the one hub still curated by hand).
+5. Update the current monthly recap, or start a new month file. Hubs, archive,
+   RSS, and the landing CTA update themselves.
+6. `SUTRO_BASE=/SutroAlmanac npm run build` (style and link checks run inside).
 7. Commit and push.

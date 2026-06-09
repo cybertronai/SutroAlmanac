@@ -4,6 +4,7 @@ import {
   fontProviders,
   passthroughImageService,
 } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
 // GitHub Pages serves this project repo under /SutroAlmanac. The base is gated
 // behind an env var so local `astro dev` stays at the root the team already
@@ -34,6 +35,7 @@ function rehypeBaseLinks() {
 export default defineConfig({
   site: "https://cybertronai.github.io",
   base,
+  integrations: [sitemap()],
   scopedStyleStrategy: "where",
   image: {
     // All artwork is plain <img> from /public, so there is nothing to optimize.

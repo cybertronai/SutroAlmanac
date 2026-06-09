@@ -1,48 +1,118 @@
 ---
 import { Font } from "astro:assets";
+import { getCollection } from "astro:content";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SmoothScroll from "../components/SmoothScroll.astro";
 import { useTranslations } from "../i18n/utils";
 import "../styles/global.css";
 
-const { title } = Astro.props;
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
 const t = useTranslations();
 // BASE_URL is "/SutroAlmanac" (no trailing slash) in the Pages build and "/" in
 // dev; normalize to a single trailing slash so `${base}path` joins cleanly.
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
-const links = [
-  { title: "Timeline", url: `${base}timeline` },
-  { title: "Recaps", url: `${base}recaps` },
-  { title: "Challenges", url: `${base}challenges` },
-  { title: "Visual tour", url: `${base}visual-tour` },
-  { title: "Projects", url: `${base}projects` },
-  { title: "Repos", url: `${base}repos` },
+const site = Astro.site ? Astro.site.href.replace(/\/$/, "") : "";
+const canonical = site + Astro.url.pathname;
+const desc =
+  description ??
+  "The running record of the Sutro Group, an energy-efficient-AI study group. Every claim traces back to a source.";
+const ogImage = site + base + "challenge-parity.jpg";
+
+// current path with the base stripped, for nav active state
+const path =
+  ("/" + Astro.url.pathname.replace(base, "")).replace(/\/+/g, "/").replace(/\/$/, "") || "/";
+
+const nav = [
+  { title: "Timeline", path: "/timeline" },
+  { title: "Recaps", path: "/recaps" },
+  { title: "Meetings", path: "/meetings" },
+  { title: "Challenges", path: "/challenges" },
+  { title: "Visual tour", path: "/visual-tour" },
+  { title: "Projects", path: "/projects" },
+  { title: "Repos", path: "/repos" },
+].map((l) => ({
+  title: l.title,
+  url: base + l.path.slice(1),
+  active: path === l.path || path.startsWith(l.path + "/") || (l.path === "/recaps" && path.startsWith("/catchups")),
+}));
+
+const footerLinks = [
+  ...nav.map(({ title, url }) => ({ title, url })),
+  { title: "Archive", url: `${base}archive` },
+  { title: "Decisions", url: `${base}decisions` },
+  { title: "Records", url: `${base}records` },
+  { title: "Glossary", url: `${base}glossary` },
+  { title: "Insights", url: `${base}insights` },
+  { title: "Search", url: `${base}search` },
+  { title: "RSS", url: `${base}rss.xml` },
 ];
+
+// freshness stamp, derived from the newest weekly recap so it can never go stale
+const docs = await getCollection("docs");
+const weeks = docs
+  .filter((d) => /^recaps\/weekly\/\d{4}-\d{2}-\d{2}$/.test(d.id))
+  .map((d) => d.id.split("/").pop())
+  .sort();
+const newest = weeks[weeks.length - 1];
+const asOf = newest
+  ? new Date(newest + "T12:00:00Z").toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+  : null;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sutro Almanac" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Sutro Almanac recaps"
+      href={`${base}rss.xml`}
+    />
     <Font cssVariable="--font-roboto-slab" preload />
     <Font cssVariable="--font-inter" preload />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body>
     <a href="#main" class="skip-link">{t("accessibility.skip-to-content")}</a>
     <Header
       logoUrl={base}
       logoAlt="Sutro Almanac"
-      links={links}
+      links={nav}
+      link0={{ title: "Search", url: `${base}search` }}
       link1={{ title: "GitHub", url: "https://github.com/cybertronai/SutroYaro" }}
       link2={{ title: "Insights", url: `${base}insights` }}
     />
     <main id="main">
       <slot />
     </main>
-    <Footer logoUrl={base} logoAlt="Sutro Almanac" links={links} />
+    <Footer
+      logoUrl={base}
+      logoAlt="Sutro Almanac"
+      links={footerLinks}
+      note={asOf ? `Record through the week of ${asOf}.` : undefined}
+    />
     <SmoothScroll />
   </body>
 </html>

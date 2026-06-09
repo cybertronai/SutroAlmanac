@@ -1,0 +1,19 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<ArticleLayout
+  title="Page not found"
+  description="That page is not in the record. The hubs below cover everything that is."
+>
+  <ul>
+    <li><a href={`${base}search`}>Search the record</a></li>
+    <li><a href={`${base}archive`}>Archive, the whole record on one page</a></li>
+    <li><a href={`${base}recaps`}>Recaps</a></li>
+    <li><a href={`${base}meetings`}>Meeting notes</a></li>
+    <li><a href={`${base}challenges`}>Challenges</a></li>
+    <li><a href={base}>Home</a></li>
+  </ul>
+</ArticleLayout>
