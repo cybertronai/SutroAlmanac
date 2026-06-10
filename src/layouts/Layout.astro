@@ -29,23 +29,29 @@ const ogImage = site + base + "challenge-parity.jpg";
 const path =
   ("/" + Astro.url.pathname.replace(base, "")).replace(/\/+/g, "/").replace(/\/$/, "") || "/";
 
+// Five items max so the centered menu never collides with the right-side
+// buttons. Everything else is one click away via Archive and the footer.
 const nav = [
   { title: "Timeline", path: "/timeline" },
   { title: "Recaps", path: "/recaps" },
-  { title: "Meetings", path: "/meetings" },
   { title: "Challenges", path: "/challenges" },
   { title: "Visual tour", path: "/visual-tour" },
-  { title: "Projects", path: "/projects" },
-  { title: "Repos", path: "/repos" },
+  { title: "Archive", path: "/archive" },
 ].map((l) => ({
   title: l.title,
   url: base + l.path.slice(1),
   active: path === l.path || path.startsWith(l.path + "/") || (l.path === "/recaps" && path.startsWith("/catchups")),
 }));
 
+const footerNav = [
+  { title: "Meetings", url: `${base}meetings` },
+  { title: "Projects", url: `${base}projects` },
+  { title: "Repos", url: `${base}repos` },
+];
+
 const footerLinks = [
   ...nav.map(({ title, url }) => ({ title, url })),
-  { title: "Archive", url: `${base}archive` },
+  ...footerNav,
   { title: "Decisions", url: `${base}decisions` },
   { title: "Records", url: `${base}records` },
   { title: "Glossary", url: `${base}glossary` },
@@ -100,9 +106,8 @@ const asOf = newest
       logoUrl={base}
       logoAlt="Sutro Almanac"
       links={nav}
-      link0={{ title: "Search", url: `${base}search` }}
       link1={{ title: "GitHub", url: "https://github.com/cybertronai/SutroYaro" }}
-      link2={{ title: "Insights", url: `${base}insights` }}
+      link2={{ title: "Search", url: `${base}search` }}
     />
     <main id="main">
       <slot />

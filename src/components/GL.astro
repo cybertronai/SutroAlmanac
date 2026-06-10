@@ -211,15 +211,81 @@
     float fres = pow(1.0 - abs(dot(n, v)), 2.2);
     col += fres * vec3(0.5, 0.22, 0.55);
 
-    gl_FragColor = vec4(col, uAlpha);
+    // translucent in the cool valleys so the crystals inside show through,
+    // opaque at the hot crests and the rim
+    float a = 0.32 + 0.62 * smoothstep(0.3, 0.88, h) + fres * 0.5;
+    gl_FragColor = vec4(col, min(a, 1.0) * uAlpha);
   }
     `,
     uniforms: coreUniforms,
     transparent: true,
+    depthWrite: false,
   });
 
   const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 5), coreMaterial);
+  core.renderOrder = 2;
   introGroup.add(core);
+
+  // ----- Inner crystals: dark faceted shapes the plasma wraps around -----
+  const shardUniforms = {
+    ...globals,
+    uAlpha: { value: 0 },
+  };
+
+  const shardMaterial = new THREE.ShaderMaterial({
+    vertexShader: `
+  precision highp float;
+
+  varying vec3 vNormal;
+  varying vec3 vView;
+
+  void main() {
+    vNormal = normalMatrix * normal;
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vView = -mv.xyz;
+    gl_Position = projectionMatrix * mv;
+  }
+    `,
+    fragmentShader: `
+  precision highp float;
+
+  uniform float uAlpha;
+
+  varying vec3 vNormal;
+  varying vec3 vView;
+
+  void main() {
+    vec3 n = normalize(vNormal);
+    vec3 v = normalize(vView);
+
+    vec3 base = vec3(0.1, 0.04, 0.26);
+    float diff = max(dot(n, normalize(vec3(0.5, 0.7, 0.6))), 0.0);
+    float fres = pow(1.0 - abs(dot(n, v)), 2.0);
+
+    vec3 col = base * (0.35 + 0.65 * diff);
+    col += vec3(0.996, 0.012, 0.635) * fres * 0.85;
+    col += vec3(1.0, 0.82, 0.95) * pow(diff, 9.0) * 0.5;
+
+    gl_FragColor = vec4(col, uAlpha);
+  }
+    `,
+    uniforms: shardUniforms,
+    transparent: true,
+  });
+
+  // flat-shaded facets: non-indexed geometry gives per-face normals
+  const shardGeo = (radius: number, detail: number) => {
+    const g = new THREE.IcosahedronGeometry(radius, detail).toNonIndexed();
+    g.computeVertexNormals();
+    return g;
+  };
+
+  const shards = new THREE.Group();
+  const shardOuter = new THREE.Mesh(shardGeo(0.68, 1), shardMaterial);
+  const shardInner = new THREE.Mesh(shardGeo(0.42, 0), shardMaterial);
+  shardInner.rotation.set(0.9, 0.4, 0.3);
+  shards.add(shardOuter, shardInner);
+  introGroup.add(shards);
 
   // ----- Halo: the layered noise-wave disc, softened into a corona -----
   const baseColor = "#fe03a2";
@@ -461,6 +527,9 @@
     const dir = window.scrollDirection;
 
     core.rotation.y += (0.0012 + abs * 0.0008) * dir;
+    shardOuter.rotation.y -= (0.003 + abs * 0.0012) * dir;
+    shardOuter.rotation.x += 0.0011 * dir;
+    shardInner.rotation.y += (0.0045 + abs * 0.0015) * dir;
     embers.rotation.y += 0.0006 * dir;
 
     smoothVel += (abs - smoothVel) * 0.05;
@@ -477,10 +546,13 @@
   function animateIn() {
     const ease = "elastic.out(1.3, 0.7)";
 
-    gsap.to([coreUniforms.uAlpha, haloUniforms.uAlpha, emberUniforms.uAlpha], {
-      value: 1,
-      duration: 0.6,
-    });
+    gsap.to(
+      [coreUniforms.uAlpha, haloUniforms.uAlpha, emberUniforms.uAlpha, shardUniforms.uAlpha],
+      {
+        value: 1,
+        duration: 0.6,
+      },
+    );
 
     const s = { scale: 0 };
     gsap.to(s, {
