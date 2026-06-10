@@ -257,13 +257,13 @@ const { logoUrl, logoAlt, link0, link1, link2, links } = Astro.props;
             transform-origin: left;
           }
         }
-
-        &[aria-current="page"]::before {
-          transform: scaleX(1);
-          transform-origin: left;
-        }
       }
     }
+  }
+
+  .menu :global(a[aria-current="page"])::before {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
   .buttons {

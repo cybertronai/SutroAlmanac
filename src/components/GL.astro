@@ -33,6 +33,7 @@
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
+    alpha: true,
   });
   const canvas = renderer.domElement;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -42,11 +43,6 @@
   renderer.setClearColor("#fff");
   renderer.setClearAlpha(0);
 
-  const radius = 1;
-  const detail = 2;
-  const baseGeo = new THREE.IcosahedronGeometry(radius, detail);
-  const posAttr = baseGeo.attributes.position;
-
   const globals = {
     uTime: { value: 0 },
     uVel: { value: 0 },
@@ -55,324 +51,15 @@
     },
   };
 
-  const appleLiquidShader = {
-    vertexShader: `
-precision mediump float;
-varying vec3 vNormal;
-varying vec3 vPosition;
-varying vec3 vWorldPosition;
-varying vec3 vViewDirection;
-varying vec2 vUv;
-
-uniform float uTime;
-uniform float uVel;
-uniform float uRand;
-uniform float uDisplacement;
-uniform vec3 uDirection;
-
-void main() {
-  vec3 pos = position;
-  pos += uDirection * uVel * 0.005 * uRand;
-  pos += uDirection * uDisplacement;
-  pos += uDirection * sin(uTime * 0.002 * uRand) * 0.015;
-  vNormal = normalMatrix * normal;
-  vPosition = pos;
-  vWorldPosition = (modelMatrix * vec4(pos, 1.0)).xyz;
-
-  vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-  vViewDirection = -mvPosition.xyz;
-
-  // Generate UVs for extruded geometry
-  vUv = uv;
-
-  gl_Position = projectionMatrix * mvPosition;
-}
-    `,
-
-    fragmentShader: `
-precision mediump float;
-
-uniform sampler2D uBackground;
-uniform vec2 uResolution;
-uniform float uTime;
-uniform float uRefraction;
-uniform float uBevelDepth;
-uniform float uBevelWidth;
-uniform bool uSpecular;
-uniform float uRand;
-uniform float uAlpha;
-uniform float uActive;
-
-varying vec3 vNormal;
-varying vec3 vPosition;
-varying vec3 vWorldPosition;
-varying vec3 vViewDirection;
-varying vec2 vUv;
-
-float random(vec2 st) {
-  return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-}
-
-// Edge detection based on normal angle (for triangular shape)
-float triangleEdgeFactor(vec2 uv) {
-  // Distance from center
-  vec2 p = uv - 0.5;
-  float centerDist = length(p);
-
-  // Create smooth edge falloff
-  float edgeDist = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
-  float bevelSize = uBevelWidth * 0.5;
-
-  return smoothstep(0.0, bevelSize, edgeDist);
-}
-
-void main() {
-  vec3 normal = normalize(vNormal);
-  vec3 viewDir = normalize(vViewDirection);
-
-  // Calculate screen UV for background sampling
-  vec2 screenUV = gl_FragCoord.xy / uResolution;
-
-  // Edge factor for beveling
-  float edge = 1.0 - triangleEdgeFactor(vUv);
-
-  // Refraction offset calculation
-  float offsetAmt = (edge * uRefraction + pow(edge, 10.0) * uBevelDepth);
-
-  // Use view direction and normal for refraction direction
-  vec3 refractDir = refract(viewDir, normal, 0.9); // Glass-like IOR
-  vec2 refractOffset = refractDir.xy * offsetAmt;
-
-  // Center blend to reduce distortion in the middle
-  vec2 p = vUv - 0.5;
-  float centreBlend = smoothstep(0.15, 0.45, length(p));
-
-  // Additional offset based on geometry orientation
-  vec2 normalOffset = normalize(p) * offsetAmt * centreBlend;
-
-  // Combine offsets
-  vec2 offset = refractOffset + normalOffset * 0.5;
-
-  // Calculate refracted UV
-  vec2 refractedUV = screenUV + offset;
-
-  // Clamp to screen bounds with smooth fallback
-  float oob = max(
-    max(-refractedUV.x, refractedUV.x - 1.0),
-    max(-refractedUV.y, refractedUV.y - 1.0)
-  );
-  float blend = 1.0 - smoothstep(0.0, 0.01, oob);
-  vec2 sampleUV = mix(screenUV, refractedUV, blend);
-
-  // Sample background
-  vec4 baseCol = texture2D(uBackground, screenUV);
-  vec2 texel = 1.0 / vec2(textureSize(uBackground, 0));
-  vec4 refrCol;
-
-  if (baseCol.a < 0.01) {
-    baseCol = vec4(0.9, 0.9, 0.9, 0.3);
-  }
-
-  // baseCol = mix(vec4(0.9, 0.9, 0.9, 0.3));
-
-  // Simple blur for smoothness
-  refrCol = texture2D(uBackground, sampleUV);
-  // refrCol += texture2D(uBackground, sampleUV + vec2(texel.x, 0.0));
-  // refrCol += texture2D(uBackground, sampleUV + vec2(-texel.x, 0.0));
-  // refrCol += texture2D(uBackground, sampleUV + vec2(0.0, texel.y));
-  // refrCol += texture2D(uBackground, sampleUV + vec2(0.0, -texel.y));
-  // refrCol /= 5.0;
-
-  // Fallback to base color if refraction fails
-  if (refrCol.a < 0.01) {
-    refrCol = baseCol;
-  }
-
-  // refrCol = mix(refrCol, vec4(1., 1., 0.0, 0.2) * refrCol.a, uActive);
-  refrCol.rgb += vec3(0.25, 0.25, 0.15) * uActive;
-
-  vec4 final = refrCol;
-
-  // Specular highlights (animated)
-  if (uSpecular) {
-    vec2 lp1 = vec2(sin(uTime * 0.002 * uRand), cos(uTime * 0.003 * uRand)) * 0.6 + 0.5;
-    vec2 lp2 = vec2(sin(uTime * -0.004 * uRand + 1.5), cos(uTime * 0.0025 * uRand - 0.5)) * 0.6 + 0.5;
-
-    float highlight = 0.0;
-    highlight += smoothstep(0.4, 0.0, distance(vUv, lp1)) * 0.15;
-    highlight += smoothstep(0.5, 0.0, distance(vUv, lp2)) * 0.12;
-
-    // Modulate by edge for realistic glass shine
-    highlight *= (1.0 - edge * 0.5);
-    final.rgb += highlight;
-  }
-
-  // Fresnel effect for glass edges
-  float fresnel = pow(1.0 - abs(dot(viewDir, normal)), 3.0);
-  final.rgb += fresnel * 0.1 * edge;
-
-  // Edge darkening for depth
-  final.rgb *= mix(1.0, 0.85, edge);
-
-  // Alpha for transparency
-  final.a = mix(0.7, 0.95, edge) * final.a * uAlpha;
-
-  gl_FragColor = final;
-}
-    `,
-  };
-
-  // ----- Build triangular prism per face (exact match) -----
+  // The group GlPlaces moves and scales between [data-gl-place] markers.
   const ballGroup = new THREE.Group();
-  const panelsGroup = new THREE.Group();
   scene.add(ballGroup);
-  ballGroup.add(panelsGroup);
 
-  const faceCount = posAttr.count / 3;
-  const faceData: {
-    mesh: THREE.Mesh;
-    normal: THREE.Vector3;
-    center: THREE.Vector3;
-    originalOffset: number;
-  }[] = [];
-
-  const vA = new THREE.Vector3();
-  const vB = new THREE.Vector3();
-  const vC = new THREE.Vector3();
-  const normal = new THREE.Vector3();
-  const center = new THREE.Vector3();
-
-  const shapeOffset = 0.9;
-  const thickness = 0.02;
-  const bevelSize = 0.02;
-  const bevelSegments = 2;
-
-  const renderTarget = new THREE.WebGLRenderTarget(1, 1, {
-    minFilter: THREE.LinearFilter,
-    magFilter: THREE.LinearFilter,
-    format: THREE.RGBAFormat,
-    depthBuffer: false,
-    stencilBuffer: false,
-    generateMipmaps: false,
-  });
-
-  for (let fi = 0; fi < faceCount; fi++) {
-    const i3 = fi * 3;
-
-    vA.fromBufferAttribute(posAttr, i3 + 0);
-    vB.fromBufferAttribute(posAttr, i3 + 1);
-    vC.fromBufferAttribute(posAttr, i3 + 2);
-
-    normal.copy(vC).sub(vB).cross(vA.clone().sub(vB)).normalize();
-
-    center
-      .copy(vA)
-      .add(vB)
-      .add(vC)
-      .multiplyScalar(1 / 3);
-
-    const shrink = (v: THREE.Vector3) => center.clone().lerp(v, shapeOffset);
-    const sA = shrink(vA);
-    const sB = shrink(vB);
-    const sC = shrink(vC);
-
-    const shape = new THREE.Shape();
-    shape.moveTo(0, 0);
-
-    const to2D = (v: THREE.Vector3) => {
-      const u = vB.clone().sub(sA).normalize();
-      const w = normal.clone();
-      const vDir = new THREE.Vector3().crossVectors(w, u);
-      const vec = v.clone().sub(sA);
-      return new THREE.Vector2(vec.dot(u), vec.dot(vDir));
-    };
-
-    shape.moveTo(to2D(sA).x, to2D(sA).y);
-    shape.lineTo(to2D(sB).x, to2D(sB).y);
-    shape.lineTo(to2D(sC).x, to2D(sC).y);
-    shape.lineTo(to2D(sA).x, to2D(sA).y);
-
-    const extrudeSettings = {
-      steps: 2,
-      depth: thickness,
-      bevelEnabled: false,
-      bevelThickness: bevelSize,
-      bevelSize: bevelSize,
-      bevelSegments: bevelSegments,
-    };
-
-    const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    const matrix = new THREE.Matrix4();
-    const u = vB.clone().sub(sA).normalize();
-    const w = normal.clone();
-    const vDir = new THREE.Vector3().crossVectors(w, u);
-
-    matrix.makeBasis(u, vDir, w);
-    matrix.setPosition(sA);
-    geom.applyMatrix4(matrix);
-
-    geom.computeVertexNormals();
-
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: appleLiquidShader.vertexShader,
-      fragmentShader: appleLiquidShader.fragmentShader,
-      uniforms: {
-        ...globals,
-        uRand: { value: Math.random() + 0.1 },
-        uDirection: { value: new THREE.Vector3(0).copy(normal) },
-        uDisplacement: { value: Math.random() * -1.7 - 0.1 },
-        uActive: { value: 0 },
-        uAlpha: { value: 0 },
-        uBackground: { value: renderTarget.texture },
-        uRefraction: { value: 0.001 + Math.random() * 0.001 },
-        uBevelDepth: { value: 0.008 + Math.random() * 0.002 },
-        uBevelWidth: { value: 1.0 + Math.random() * 0.2 },
-        uFrost: { value: 0.0 },
-        uSpecular: { value: true },
-      },
-      transparent: true,
-    });
-
-    const mesh = new THREE.Mesh(geom, mat);
-    panelsGroup.add(mesh);
-
-    faceData.push({
-      mesh,
-      normal: normal.clone(),
-      center: center.clone(),
-      originalOffset: 0,
-    });
-  }
-
-  /// circle
-  const baseColor = "#fe03a2";
-  const colors = ["#FC85AE", "#8d73f5"];
-
-  const seed = Math.random() * 10;
-  const waves = colors.map((c, i) => {
-    const e = i + 1;
-    return {
-      color: new THREE.Color(c),
-      noiseFreq: [2 + e / (colors.length + 1), 3 + e / (colors.length + 1)],
-      noiseSpeed: 11 + 0.3 * e,
-      noiseFlow: 6.5 + 0.3 * e,
-      noiseSeed: seed + 10 * e,
-      noiseFloor: 0.1,
-      noiseCeil: 0.63 + 0.07 * e,
-    };
-  });
+  // Intro scale animates this inner group so it never fights the placement scale.
+  const introGroup = new THREE.Group();
+  ballGroup.add(introGroup);
 
   // ---- GLSL HELPERS ----
-  const blend = `
-  vec3 blendNormal(vec3 base, vec3 blend) {
-    return blend;
-  }
-
-  vec3 blendNormal(vec3 base, vec3 blend, float opacity) {
-    return (blendNormal(base, blend) * opacity + base * (1.0 - opacity));
-  }
-  `;
-
   const noise = `
   //	Simplex 3D Noise
   //	by Ian McEwan, Stefan Gustavson (https://github.com/stegu/webgl-noise)
@@ -450,8 +137,119 @@ void main() {
   }
   `;
 
-  // ---- SHADERS ----
-  const vertexShader = `
+  // ----- Plasma core: a boiling, noise-displaced sphere -----
+  const coreUniforms = {
+    ...globals,
+    uAlpha: { value: 0 },
+    uFlare: { value: 0 },
+  };
+
+  const coreMaterial = new THREE.ShaderMaterial({
+    vertexShader: `
+  precision highp float;
+  ${noise}
+
+  uniform float uTime;
+  uniform float uVel;
+  uniform float uFlare;
+
+  varying float vHeat;
+  varying vec3 vNormal;
+  varying vec3 vView;
+
+  float fbm(vec3 p) {
+    float f = 0.0;
+    f += 0.55 * snoise(p);
+    f += 0.28 * snoise(p * 2.07 + 11.3);
+    f += 0.17 * snoise(p * 4.31 - 7.7);
+    return f;
+  }
+
+  void main() {
+    float t = uTime * 0.00026;
+    vec3 dir = normalize(position);
+
+    // upward-scrolling noise so surface features rise like flame
+    float n = fbm(dir * 2.3 + vec3(0.0, -t * 1.6, 0.0) + t * 0.55);
+
+    float amp = 0.17 + min(uVel * 0.00035, 0.12) + uFlare * 0.22;
+    vec3 pos = position + dir * n * amp;
+
+    vHeat = n;
+    vNormal = normalMatrix * normal;
+
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    vView = -mv.xyz;
+    gl_Position = projectionMatrix * mv;
+  }
+    `,
+    fragmentShader: `
+  precision highp float;
+
+  uniform float uAlpha;
+  uniform float uFlare;
+
+  varying float vHeat;
+  varying vec3 vNormal;
+  varying vec3 vView;
+
+  void main() {
+    // brand heat ramp: deep violet, magenta, pink, white-hot
+    vec3 deep = vec3(0.09, 0.025, 0.24);
+    vec3 mag  = vec3(0.996, 0.012, 0.635);
+    vec3 pink = vec3(0.988, 0.522, 0.682);
+    vec3 hot  = vec3(1.0, 0.97, 0.995);
+
+    float h = clamp(vHeat * 0.95 + 0.48 + uFlare * 0.22, 0.0, 1.0);
+
+    vec3 col = mix(deep, mag, smoothstep(0.1, 0.55, h));
+    col = mix(col, pink, smoothstep(0.55, 0.78, h));
+    col = mix(col, hot, smoothstep(0.78, 0.95, h));
+
+    vec3 n = normalize(vNormal);
+    vec3 v = normalize(vView);
+    float fres = pow(1.0 - abs(dot(n, v)), 2.2);
+    col += fres * vec3(0.5, 0.22, 0.55);
+
+    gl_FragColor = vec4(col, uAlpha);
+  }
+    `,
+    uniforms: coreUniforms,
+    transparent: true,
+  });
+
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 5), coreMaterial);
+  introGroup.add(core);
+
+  // ----- Halo: the layered noise-wave disc, softened into a corona -----
+  const baseColor = "#fe03a2";
+  const colors = ["#FC85AE", "#8d73f5"];
+
+  const seed = Math.random() * 10;
+  const waves = colors.map((c, i) => {
+    const e = i + 1;
+    return {
+      color: new THREE.Color(c),
+      noiseFreq: [2 + e / (colors.length + 1), 3 + e / (colors.length + 1)],
+      noiseSpeed: 11 + 0.3 * e,
+      noiseFlow: 6.5 + 0.3 * e,
+      noiseSeed: seed + 10 * e,
+      noiseFloor: 0.1,
+      noiseCeil: 0.63 + 0.07 * e,
+    };
+  });
+
+  const blend = `
+  vec3 blendNormal(vec3 base, vec3 blend) {
+    return blend;
+  }
+
+  vec3 blendNormal(vec3 base, vec3 blend, float opacity) {
+    return (blendNormal(base, blend) * opacity + base * (1.0 - opacity));
+  }
+  `;
+
+  const haloVertex = `
   precision highp float;
   ${noise}
   ${blend}
@@ -508,7 +306,7 @@ void main() {
   }
   `;
 
-  const fragmentShader = `
+  const haloFragment = `
   precision highp float;
 
   uniform float uAlpha;
@@ -517,16 +315,17 @@ void main() {
   varying vec3 vColor;
   void main() {
     float dist = distance(vUv, vec2(0.5, 0.5));
+    float a = smoothstep(0.5, 0.2, dist);
 
-    if (dist > 0.5) {
+    if (a < 0.003) {
         discard;
     }
 
-    gl_FragColor = vec4(vColor * uAlpha, 1.0 * uAlpha);
+    gl_FragColor = vec4(vColor, a * 0.85 * uAlpha);
   }
   `;
 
-  const uniforms = {
+  const haloUniforms = {
     ...globals,
     uBaseColor: { value: new THREE.Color(baseColor) },
     uNoiseFreq: {
@@ -539,74 +338,111 @@ void main() {
     uAlpha: { value: 0 },
   };
 
-  const material = new THREE.ShaderMaterial({
-    vertexShader,
-    fragmentShader,
-    uniforms,
-  });
+  const halo = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.1, 3.1, 100, 100),
+    new THREE.ShaderMaterial({
+      vertexShader: haloVertex,
+      fragmentShader: haloFragment,
+      uniforms: haloUniforms,
+      transparent: true,
+      depthWrite: false,
+    }),
+  );
+  halo.position.z = -0.6;
+  introGroup.add(halo);
 
-  const geometry = new THREE.PlaneGeometry(1.7, 1.7, 100, 100);
-  const circle = new THREE.Mesh(geometry, material);
-  ballGroup.add(circle);
+  // ----- Embers: a sparse drift of bright points leaving the surface -----
+  const EMBERS = 140;
+  const emberGeo = new THREE.BufferGeometry();
+  {
+    const pos = new Float32Array(EMBERS * 3);
+    const seeds = new Float32Array(EMBERS);
+    for (let i = 0; i < EMBERS; i++) {
+      const v = new THREE.Vector3()
+        .randomDirection()
+        .multiplyScalar(1);
+      pos[i * 3] = v.x;
+      pos[i * 3 + 1] = v.y;
+      pos[i * 3 + 2] = v.z;
+      seeds[i] = Math.random() * 100;
+    }
+    emberGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    emberGeo.setAttribute("aSeed", new THREE.BufferAttribute(seeds, 1));
+  }
 
+  const emberUniforms = {
+    ...globals,
+    uAlpha: { value: 0 },
+    uDpr: { value: renderer.getPixelRatio() },
+  };
+
+  const embers = new THREE.Points(
+    emberGeo,
+    new THREE.ShaderMaterial({
+      vertexShader: `
+  precision highp float;
+
+  attribute float aSeed;
+  uniform float uTime;
+  uniform float uDpr;
+  varying float vA;
+
+  void main() {
+    float t = uTime * 0.00006 * (0.6 + fract(aSeed * 7.13)) + aSeed;
+    float ph = fract(t);
+    vec3 dir = normalize(position);
+    float r = 1.12 + ph * 0.85;
+    vec3 pos = dir * r;
+    pos.y += ph * 0.3;
+
+    vA = sin(3.14159 * ph);
+
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    gl_PointSize = (2.0 + fract(aSeed * 3.7) * 3.5) * uDpr;
+    gl_Position = projectionMatrix * mv;
+  }
+      `,
+      fragmentShader: `
+  precision highp float;
+
+  uniform float uAlpha;
+  varying float vA;
+
+  void main() {
+    vec2 p = gl_PointCoord - 0.5;
+    float a = smoothstep(0.5, 0.05, length(p)) * vA * uAlpha;
+    gl_FragColor = vec4(1.0, 0.6, 0.86, a * 0.9);
+  }
+      `,
+      uniforms: emberUniforms,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    }),
+  );
+  introGroup.add(embers);
+
+  // ----- Interaction: clicking the core makes it flare -----
   const mouse = new THREE.Vector2();
-  const toggled = new Set();
+  const raycaster = new THREE.Raycaster();
 
   document.addEventListener("pointermove", (event) => {
-    event.preventDefault();
-
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   });
 
   window.addEventListener("pointerdown", () => {
     raycaster.setFromCamera(mouse, camera);
-
-    const intersect = raycaster.intersectObjects(
-      panelsGroup.children,
-      false,
-    )[0];
-
-    if (intersect) {
-      const hit = intersect.object;
-      const idx = faceData.findIndex((f) => f.mesh === hit);
-      if (idx >= 0) togglePanel(idx);
-    }
+    const hit = raycaster.intersectObject(core, false)[0];
+    if (hit) flare();
   });
 
-  function togglePanel(idx: number) {
-    const data = faceData[idx];
-    const mesh = data.mesh;
-
-    const isTogg = toggled.has(idx);
-    if (isTogg) {
-      toggled.delete(idx);
-    } else {
-      toggled.add(idx);
-    }
-
-    gsap.fromTo(
-      (mesh.material as any).uniforms.uDisplacement,
-      {
-        value: isTogg ? 0.1 : 0,
-      },
-      {
-        value: isTogg ? 0 : 0.1,
-      },
-    );
-
-    gsap.fromTo(
-      (mesh.material as any).uniforms.uActive,
-      {
-        value: isTogg ? 1 : 0,
-      },
-      {
-        value: isTogg ? 0 : 1,
-      },
-    );
+  function flare() {
+    gsap
+      .timeline()
+      .to(coreUniforms.uFlare, { value: 1, duration: 0.18, ease: "power2.out" })
+      .to(coreUniforms.uFlare, { value: 0, duration: 1.2, ease: "power2.inOut" });
   }
-
-  const raycaster = new THREE.Raycaster();
 
   window.scrollVelocity = 0;
   window.scrollDirection = 1;
@@ -618,77 +454,45 @@ void main() {
   let isPlaced = true;
 
   function animate(t: number) {
-    uniforms.uTime.value = t * 1000;
+    globals.uTime.value = t * 1000;
 
     const vel = isPlaced ? 0 : window.scrollVelocity;
     const abs = Math.abs(vel);
     const dir = window.scrollDirection;
 
-    panelsGroup.rotation.y += (0.002 + abs * 0.001) * dir;
-    panelsGroup.rotation.x += (0.002 + abs * 0.001) * -dir;
+    core.rotation.y += (0.0012 + abs * 0.0008) * dir;
+    embers.rotation.y += 0.0006 * dir;
 
     smoothVel += (abs - smoothVel) * 0.05;
     globals.uVel.value = smoothVel;
     camera.position.y = window.scrollCurrent * pixelToUnit;
-
-    panelsGroup.visible = false;
-    renderer.setRenderTarget(renderTarget);
-
-    renderer.render(scene, camera);
-    renderer.setRenderTarget(null);
-    panelsGroup.visible = true;
 
     renderer.render(scene, camera);
   }
   gsap.ticker.fps(60);
   gsap.ticker.add(animate);
 
-  const alphas: unknown[] = [];
-  const displaces: unknown[] = [];
-
-  circle.scale.setScalar(0);
+  introGroup.scale.setScalar(0);
 
   function animateIn() {
     const ease = "elastic.out(1.3, 0.7)";
 
-    faceData.forEach((f) => {
-      const uniforms = (f.mesh.material as any).uniforms;
-
-      displaces.push(uniforms.uDisplacement);
-      alphas.push(uniforms.uAlpha);
-    });
-
-    gsap.to(displaces, {
-      value: 0,
-      duration: 0.7,
-      ease,
-    });
-
-    gsap.to(alphas, {
+    gsap.to([coreUniforms.uAlpha, haloUniforms.uAlpha, emberUniforms.uAlpha], {
       value: 1,
-      duration: 0.5,
-      delay: "random(0, 0.2)",
+      duration: 0.6,
     });
 
-    gsap.to(uniforms.uAlpha, {
-      value: 1,
-      duration: 0.5,
-    });
-
-    displaces.splice(0, displaces.length);
-    alphas.splice(0, displaces.length);
-
-    const s = {
-      scale: 0,
-    };
+    const s = { scale: 0 };
     gsap.to(s, {
       duration: 0.7,
       ease,
       scale: 1,
       onUpdate() {
-        circle.scale.setScalar(s.scale);
+        introGroup.scale.setScalar(s.scale);
       },
     });
+
+    flare();
   }
 
   setTimeout(animateIn, 200);
@@ -843,8 +647,7 @@ void main() {
 
       globals.uResolution.value.x = canvas.width;
       globals.uResolution.value.y = canvas.height;
-
-      renderTarget.setSize(width, height);
+      emberUniforms.uDpr.value = renderer.getPixelRatio();
 
       aspect = width / height;
       camera.left = (-frustumSize * aspect) / 2;
