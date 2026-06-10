@@ -6,12 +6,13 @@ interface Props {
   logoUrl: string;
   logoAlt: string;
   links: (Link & { active?: boolean })[];
+  moreLinks?: Link[];
   link0?: Link;
   link1?: Link;
   link2?: Link;
 }
 
-const { logoUrl, logoAlt, link0, link1, link2, links } = Astro.props;
+const { logoUrl, logoAlt, link0, link1, link2, links, moreLinks } = Astro.props;
 ---
 
 <header>
@@ -30,6 +31,27 @@ const { logoUrl, logoAlt, link0, link1, link2, links } = Astro.props;
                   <a href={l.url} aria-current={l.active ? "page" : undefined}>
                     {l.title}
                   </a>
+                </li>
+              ))
+            }
+            {
+              moreLinks?.length ? (
+                <li class="more-desktop">
+                  <details class="more">
+                    <summary>More</summary>
+                    <div class="more-panel">
+                      {moreLinks.map((l) => (
+                        <a href={l.url}>{l.title}</a>
+                      ))}
+                    </div>
+                  </details>
+                </li>
+              ) : null
+            }
+            {
+              moreLinks?.map((l) => (
+                <li class="more-mobile">
+                  <a href={l.url}>{l.title}</a>
                 </li>
               ))
             }
@@ -267,6 +289,83 @@ const { logoUrl, logoAlt, link0, link1, link2, links } = Astro.props;
     transform-origin: left;
   }
 
+  /* the shared li rule is .menu :global(ul) :global(li); match its chain so
+     these visibility toggles actually win */
+  .menu :global(ul) :global(li.more-mobile) {
+    display: none;
+
+    @media (--mq-tablet) {
+      display: flex;
+      font-size: 1.35rem;
+    }
+  }
+
+  .menu :global(ul) :global(li.more-desktop) {
+    @media (--mq-tablet) {
+      display: none;
+    }
+  }
+
+  .more {
+    position: relative;
+  }
+
+  .more summary {
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+  }
+
+  .more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .more summary::after {
+    content: "";
+    display: inline-block;
+    width: 0.4em;
+    height: 0.4em;
+    margin-left: 0.45em;
+    border-right: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    transform: rotate(45deg) translateY(-0.2em);
+    transition: transform 0.2s var(--ease-out-cubic);
+  }
+
+  .more[open] summary::after {
+    transform: rotate(-135deg) translateY(0.1em);
+  }
+
+  .more-panel {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 10.5rem;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 1rem;
+    box-shadow: 0 24px 60px -28px rgba(11, 31, 91, 0.45);
+    padding: 0.5rem;
+  }
+
+  .more-panel a {
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.6rem;
+  }
+
+  .more-panel a::before {
+    display: none;
+  }
+
+  .more-panel a:hover,
+  .more-panel a:focus {
+    background: rgba(141, 115, 245, 0.14);
+  }
+
   .buttons {
     display: flex;
     align-items: center;
@@ -449,4 +548,19 @@ const { logoUrl, logoAlt, link0, link1, link2, links } = Astro.props;
   }
 
   customElements.define("sy-head", Header);
+
+  // close the More dropdown on outside click or Escape
+  document.addEventListener("click", (e) => {
+    document
+      .querySelectorAll<HTMLDetailsElement>("details.more[open]")
+      .forEach((d) => {
+        if (!d.contains(e.target as Node)) d.open = false;
+      });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    document
+      .querySelectorAll<HTMLDetailsElement>("details.more[open]")
+      .forEach((d) => (d.open = false));
+  });
 </script>

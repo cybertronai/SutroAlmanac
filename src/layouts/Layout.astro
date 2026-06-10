@@ -43,19 +43,21 @@ const nav = [
   active: path === l.path || path.startsWith(l.path + "/") || (l.path === "/recaps" && path.startsWith("/catchups")),
 }));
 
-const footerNav = [
+// Everything beyond the five core items, reachable from the header's More
+// dropdown and repeated in the footer.
+const moreLinks = [
   { title: "Meetings", url: `${base}meetings` },
   { title: "Projects", url: `${base}projects` },
   { title: "Repos", url: `${base}repos` },
-];
-
-const footerLinks = [
-  ...nav.map(({ title, url }) => ({ title, url })),
-  ...footerNav,
   { title: "Decisions", url: `${base}decisions` },
   { title: "Records", url: `${base}records` },
   { title: "Glossary", url: `${base}glossary` },
   { title: "Insights", url: `${base}insights` },
+];
+
+const footerLinks = [
+  ...nav.map(({ title, url }) => ({ title, url })),
+  ...moreLinks,
   { title: "Search", url: `${base}search` },
   { title: "RSS", url: `${base}rss.xml` },
 ];
@@ -106,6 +108,7 @@ const asOf = newest
       logoUrl={base}
       logoAlt="Sutro Almanac"
       links={nav}
+      moreLinks={moreLinks}
       link1={{ title: "GitHub", url: "https://github.com/cybertronai/SutroYaro" }}
       link2={{ title: "Search", url: `${base}search` }}
     />
